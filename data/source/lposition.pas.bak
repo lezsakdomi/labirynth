@@ -1,0 +1,90 @@
+unit LPosition;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, LTypes;
+
+type
+  TLPosition=class(TObject)
+  private //types and vars
+    var
+      FDirection: TLDirection;
+      FFx, FFy: Extended;
+  public //procedures
+    constructor Create(Ax: Integer=0; Ay: Integer=0; Adirection: Extended=0);
+    destructor Destroy; override;
+    procedure move(ADirection: TLDirection=0; ASteps: Integer=1);
+  public //propertyes
+    property Fx: Extended read FFx write FFx;
+    property Fy: Extended read FFy write FFy;
+    function getx: Integer;
+    procedure setx(Value: Integer);
+    property x: Integer read getX write setx;
+    function gety: Integer;
+    procedure sety(Value: Integer);
+    property y: Integer read getY write sety;
+    function getCoords: TPoint;
+    procedure setCoords(Value: TPoint);
+    property coords: TPoint read getCoords write setCoords;
+    property direction: TLDirection read FDirection write FDirection;
+  end;
+
+implementation
+
+constructor TLPosition.Create(Ax: Integer=0; Ay: Integer=0; Adirection: Extended=0);
+begin
+  inherited Create;
+  FFx:=Ax;
+  FFy:=Ay;
+  Fdirection:=Adirection;
+end;
+
+destructor TLPosition.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TLPosition.move(ADirection: TLDirection=0; ASteps: Integer=1);
+var dir: TLDirection;
+begin
+  dir:=direction+ADirection;
+  Fx:=Fx+sin(dir)*ASteps;
+  Fy:=Fy-cos(dir)*ASteps;
+end;
+
+function TLPosition.getx: Integer;
+begin
+  Result:=round(Fx);
+end;
+
+procedure TLPosition.setx(Value: Integer);
+begin
+  Fx:=Value;
+end;
+
+function TLPosition.gety: Integer;
+begin
+  Result:=round(Fy);
+end;
+
+procedure TLPosition.sety(Value: Integer);
+begin
+  Fy:=Value;
+end;
+
+function TLPosition.getCoords:TPoint;
+begin
+  Result:=Point(x, y);
+end;
+
+procedure TLPosition.setCoords(Value: TPoint);
+begin
+  x:=Value.X;
+  y:=Value.Y;
+end;
+
+end.
+

@@ -1,0 +1,8 @@
+object Form2: TForm2
+  Left = 1147
+  Height = 90
+  Top = 260
+  Width = 116
+  Caption = 'Minimap'
+  LCLVersion = '1.2.6.0'
+end

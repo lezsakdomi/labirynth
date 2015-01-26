@@ -1,0 +1,194 @@
+unit LGraphics;
+
+{$mode objfpc}{$H+}{$Define LGRAPHICS}
+
+interface
+
+uses
+  Classes, SysUtils, Graphics, ExtCtrls, Forms,
+  LTypes, LLevel, LIniFiles, LSize, LPosition;
+
+type
+
+  TVisualisator=class(TImage)
+  private
+    {types and vars}
+    var
+      //FScreen: TCanvas;
+      FLevel: TLLevel;
+      FDbg, FAnimate, FDrawcorner: Boolean;
+      Fini: TLIniFile;
+
+    const
+      iniSection='Visualisator';
+  public
+    {functions and procedures}
+    constructor Create(AOwner: TForm; Aini: TLIniFile);
+    procedure draw;
+    procedure move(ADirection: TLDirection; ASteps: Integer=1; doDraw: Boolean=true);
+    destructor Destroy; override;
+  private
+    {propertyes}
+    property ini: TLIniFile read Fini write Fini;
+  public
+    {propertyes}
+    procedure setLevel(Value: TLLevel);
+    property Level: TLLevel read FLevel write setLevel;
+    property dbg: Boolean read FDbg write FDbg;
+    property Animate: Boolean read FAnimate write FAnimate;
+    property DrawCorner: Boolean read FDrawcorner write FDrawcorner;
+    function getPos: TPoint;
+    procedure setPos(value: TPoint);
+    property Pos: TPoint read getPos write setPos;
+    function getSize: TLSize;
+    procedure setSize(Value: TLSize);
+    property Size: TLSize read getSize write setSize;
+  end;
+
+implementation
+
+constructor TVisualisator.Create(AOwner: TForm; Aini: TLIniFile);
+begin
+  inherited Create(AOwner);
+  Fini:=Aini;
+  Pos:=ini.ReadPoint(iniSection, 'pos', Pos);
+  Size:=ini.ReadLSize(iniSection, 'size', Size);
+  //Level:=TLLevel.Create(TIniFile.Create(ini.ReadFn('level', 'ini', '')));
+  {
+  FScreen:=TCanvas.Create;
+  FScreen.Width:=FMap.data.Width;
+  FScreen.Height:=FMap.data.Height;
+  }
+  Parent:=AOwner;
+  Picture.Bitmap:=ini.ReadBitmap(iniSection, 'splash', nil);
+  dbg:=ini.ReadBool(iniSection, 'dbg', false);
+  Animate:=ini.ReadBool(iniSection, 'animate', false);
+  DrawCorner:=ini.ReadBool(iniSection, 'drawcorner', true);
+end;
+
+procedure TVisualisator.setLevel(Value: TLLevel);
+begin
+  FLevel:=Value;
+  draw;
+end;
+
+procedure TVisualisator.draw;
+  procedure drawPixel(
+    X, Y, i, j: Extended;
+    cl: TColor
+  );
+  var
+    Xmax, Ymax, cXmax, cYmax: Extended;
+  begin
+    Ymax:=Level.ViewSize.y;
+    Xmax:=Level.ViewSize.x/2;
+    Xmax:=Xmax*(Y)/Ymax;
+    cXmax:=canvas.Width/2;
+    cYmax:=Canvas.Height/2;
+    {$IfDef WINDOWS}
+      if xmax=0 then xmax:=1;
+    {$EndIf}
+    Canvas.Pixels[
+      round(cXmax+cXmax*X/Xmax+j),
+      round(cYmax+i)
+    ]:=cl;
+  end;
+  procedure drawPixel(X, Y, i, imax, j, jmax: Extended);
+  var
+    cl: TColor;
+    //imax: Integer;
+  begin
+    //imax:=10;
+    cl:=RGBToColor(round(255*(Y*Y)/(Level.ViewSize.y*Level.ViewSize.y)),
+                   round(255*abs(imax+i)/abs(imax+imax)),
+                   round(255*Y/Level.ViewSize.y/2)
+    );
+    drawPixel(X, Y, i, j, cl);
+  end;
+var
+  fullPosition: TLPosition;
+  X, Xmax, Y, Ymax, imax, jmax, dir:Extended;
+  mX, mY, i, j: Integer;
+begin
+  if not (dbg or animate) then Visible:=False;
+  Canvas.Clear;
+  Ymax:=Level.ViewSize.y;
+  for mY:=-round(Ymax) to 0 do
+  begin
+    Y:=-mY;
+    Xmax:=Level.ViewSize.x/2;
+    Xmax:=Xmax*(Y)/Ymax;
+    for mX:=-round(Xmax) to round(Xmax) do
+    begin
+      X:=-mX;
+      {$IfNDef WINDOWS}
+        if animate then Sleep(1);
+      {$EndIf}
+      if dbg or Animate then Application.ProcessMessages;
+      dir:=Level.PlayerPosition.direction;
+      fullPosition:=TLPosition.Create;
+      fullPosition.X:=Level.PlayerPosition.coords.X+round(sin(dir)*Y+cos(dir)*X);
+      fullPosition.Y:=Level.PlayerPosition.coords.Y-round(cos(dir)*Y-sin(dir)*X);
+      fullPosition.direction:=Level.PlayerPosition.direction+0;
+      if Level.isPlayerPosition(fullPosition) then
+      begin
+        if dbg then Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clGreen;
+        if Level.data.Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]=clBlack then
+        begin
+          if dbg then Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clRed;
+          imax:=Ymax-(Canvas.Height/2*Y/Ymax);
+          {$IfDef WINDOWS}
+            if xmax=0 then xmax:=1;
+          {$EndIf}
+          jmax:=Canvas.Width/Xmax/2;
+          //if animate then jmax:=0;
+          for j:=-round(jmax) to round(jmax) do
+          begin
+            for i:=-round(imax) to round(imax) do
+              drawPixel(x, y, i, imax, j, jmax);
+            if not animate and DrawCorner then
+            begin
+              drawPixel(x, y, -imax, j, clBlack);
+              drawPixel(x, y, +imax, j, clBlack);
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+  Visible:=True;
+  //if animate then Animate:=False;
+end;
+
+destructor TVisualisator.Destroy;
+begin
+  inherited Destroy;
+end;
+
+function TVisualisator.getPos:TPoint;
+begin
+  Result.X:=Left;
+  Result.Y:=Top;
+end;
+
+procedure TVisualisator.setPos(Value: TPoint);
+begin
+  Left:=Value.X;
+  Top:=Value.Y;
+end;
+
+function TVisualisator.getSize: TLSize;
+begin
+  Result.x:=Width;
+  Result.y:=Height;
+  Result.z:=0;
+end;
+
+procedure TVisualisator.setSize(Value: TLSize);
+begin
+  Width:=Value.x;
+  Height:=Value.y;
+end;
+
+end.
+

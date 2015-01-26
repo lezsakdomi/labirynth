@@ -1,0 +1,142 @@
+unit LLevel;
+
+{$mode objfpc}{$H+}{$Define LLEVEL}
+
+interface
+
+uses
+  Classes, SysUtils, IniFiles, Graphics, LMap, LTypes, LIniFiles, LPosition,
+  LSize;
+
+type
+  TLLevel=class(TObject)
+  private
+    {types and vars}
+    var
+      FIni: TLIniFile;
+      FMap: TLMap;
+      FPlayerPosition: TLPosition;
+  public
+    {types and vars}
+    type
+      TLLevelArray=array of TLLevel;
+  public
+    {functions and procedures}
+    constructor Create(Aini: TLIniFile);
+    destructor Destroy; override;
+    procedure move(ADirection: TLDirection; ASteps: Integer=1);
+  private
+    {propertyes}
+    property ini: TLIniFile read FIni write FIni;
+    property Map: TLMap read FMap write FMap;
+  public
+    {propertyes}
+    procedure setPlayerPosition(Value: TLPosition);
+    function isPlayerPosition(Value: TLPosition): Boolean;
+    property PlayerPosition: TLPosition read FPlayerPosition write setPlayerPosition;
+    function getWidth: Integer;
+    procedure setWidth(Value: Integer);
+    property Width: Integer read getWidth write setWidth;
+    function getHeight: Integer;
+    procedure setHeight(Value: Integer);
+    property Height: Integer read getHeight write setHeight;
+    function getdata: TBitmap;
+    property data: TBitmap read getdata;
+    function getViewSize: TLSize;
+    procedure setViewSize(Value: TLSize);
+    property ViewSize: TLSize read getViewSize write setViewSize;
+  end;
+
+TLLevelArray=TLLevel.TLLevelArray;
+
+function ReadLevelArray(const Ident: String; var ini: TLIniFile): TLLevelArray;
+
+implementation
+
+constructor TLLevel.Create(AIni: TLIniFile);
+begin
+  inherited Create;
+  Fini:=AIni;
+  FMap:=TLMap.Create(ini.ReadIni('Map', 'ini'));
+  FPlayerPosition:=TLPosition.Create;
+  PlayerPosition.coords:=ini.ReadPoint('Player', 'coords', Point(round(Width/2), round(Height/2)));
+  PlayerPosition.direction:=ini.ReadFloat('Player', 'direction', 0);
+end;
+
+destructor TLLevel.Destroy;
+begin
+  inherited Destroy;
+end;
+
+function TLLevel.isPlayerPosition(Value: TLPosition):Boolean;
+var minx, maxx, miny, maxy: Integer;
+begin
+  minx:=1;
+  maxx:=Map.Width;
+  miny:=1;
+  maxy:=Map.Height;
+  Result:=(
+    //((0<=Value.direction) and (Value.direction<=1)) and
+    ((0<=Value.X) and (Value.X<=maxx)) and
+    ((0<=Value.Y) and (Value.Y<=maxy))
+  );
+end;
+
+procedure TLLevel.setPlayerPosition(Value: TLPosition);
+begin
+  if isPlayerPosition(Value) and (Map.data.Canvas.Pixels[Value.coords.x, Value.coords.y]<>clBlack) then
+  begin
+    FPlayerPosition:=Value;
+  end;
+end;
+
+function TLLevel.getWidth: Integer;
+begin
+  Result:=Map.Height;
+end;
+
+procedure TLLevel.setWidth(Value: Integer);
+begin
+  Map.Width:=Value;
+end;
+
+function TLLevel.getHeight: Integer;
+begin
+  Result:=Map.Height;
+end;
+
+procedure TLLevel.setHeight(Value: Integer);
+begin
+  Map.Height:=Value;
+end;
+
+function TLLevel.getdata: TBitmap;
+begin
+  Result:=Map.data;
+end;
+
+function TLLevel.getViewSize: TLSize;
+begin
+  Result:=ini.ReadLSize('Player', 'viewsize', TLSize.Create(0, 0, 0));
+end;
+
+procedure TLLevel.setViewSize(Value:TLSize);
+begin
+  ini.WriteLSize('Player', 'viewsize', Value);
+end;
+
+function ReadLevelArray(const Ident: String; var ini: TLIniFile): TLLevelArray;
+var inis: TLIniFileArray;
+    i: Integer;
+begin
+  inis:=ini.ReadIniArray(Ident);
+
+  SetLength(Result, Length(inis));
+  for i:=0 to Length(inis)-1 do
+  begin
+    Result[i]:=TLLevel.Create(inis[i]);
+  end;
+end;
+
+end.
+
