@@ -189,14 +189,22 @@ end;
 
 function TLLevel.getFloor(APosition: TL2DPosition=nil): TColor;
 begin
-  if APosition=nil then APosition:=PlayerPosition;
-  Result:=Map.Floor.Canvas.Pixels[APosition.X, APosition.Y];
+  if Map.Floor<>Nil then
+  begin
+    if APosition=nil then APosition:=PlayerPosition;
+    Result:=Map.Floor.Canvas.Pixels[APosition.X, APosition.Y];
+  end else
+    Result:=clWhite;
 end;
 
 function TLLevel.getSky(APosition: TL2DPosition=nil): TColor;
 begin
-  if APosition=nil then APosition:=PlayerPosition;
-  Result:=Map.Sky.Canvas.Pixels[APosition.X, APosition.Y];
+  if Map.Sky<>Nil then
+  begin
+    if APosition=nil then APosition:=PlayerPosition;
+    Result:=Map.Sky.Canvas.Pixels[APosition.X, APosition.Y];
+  end else
+    Result:=clWhite;
 end;
 
 function TLLevel.getdata(APosition: TL2DPosition=nil): TColor;

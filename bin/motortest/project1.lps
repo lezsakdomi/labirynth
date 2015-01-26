@@ -46,7 +46,6 @@
         <Filename Value="..\lgraphics.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LGraphics"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="136"/>
@@ -73,10 +72,11 @@
         <Filename Value="..\llevel.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LLevel"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="171"/>
-        <CursorPos X="1" Y="186"/>
+        <TopLine Value="189"/>
+        <CursorPos X="20" Y="207"/>
         <UsageCount Value="71"/>
         <Loaded Value="True"/>
       </Unit5>

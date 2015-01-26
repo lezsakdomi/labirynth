@@ -46,14 +46,15 @@
         <Filename Value="..\lgraphics.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LGraphics"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="304"/>
-        <CursorPos X="36" Y="319"/>
+        <TopLine Value="136"/>
+        <CursorPos X="13" Y="159"/>
         <UsageCount Value="71"/>
         <Bookmarks Count="2">
           <Item0 X="1" Y="99" ID="0"/>
-          <Item1 X="1" Y="172" ID="1"/>
+          <Item1 X="1" Y="175" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit3>
@@ -83,10 +84,9 @@
         <Filename Value="..\lmap.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LMap"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="25"/>
+        <TopLine Value="40"/>
         <CursorPos X="1" Y="44"/>
         <UsageCount Value="71"/>
         <Loaded Value="True"/>
