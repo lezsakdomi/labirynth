@@ -144,10 +144,10 @@ if (Visualisator<>Nil) and (Visualisator.Level<>Nil) then
     if GetKeyState(i)<0 then
     begin
       case chr(i) of
-        'W':  Visualisator.Level.PlayerPosition.move(0*right_angle, 3);
-        'A':  Visualisator.Level.PlayerPosition.move( -right_angle, 3);
-        'S':  Visualisator.Level.PlayerPosition.move(2*right_angle, 3);
-        'D':  Visualisator.Level.PlayerPosition.move( +right_angle, 3);
+        'W':  Visualisator.Level.{PlayerPosition.}move(0*right_angle, 3);
+        'A':  Visualisator.Level.{PlayerPosition.}move( -right_angle, 3);
+        'S':  Visualisator.Level.{PlayerPosition.}move(2*right_angle, 3);
+        'D':  Visualisator.Level.{PlayerPosition.}move( +right_angle, 3);
         {$IfDef WINDOWS}#226{$Else}#16{$EndIf}: Visualisator.Level.PlayerPosition.direction:=Visualisator.Level.PlayerPosition.direction-0.1; //í
         'C':  Visualisator.Level.PlayerPosition.direction:=Visualisator.Level.PlayerPosition.direction+0.1;
         else Caption:='Pressed:'+chr(i)+'['+IntToStr(i)+']';

@@ -255,7 +255,7 @@ begin
         {$EndIf}
         {$IfDef DBG}if dbg then
           {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clGreen;{$EndIf}
-        {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, clGreen);{$EndIf}
+        {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, {clGreen}Level.data[fullPosition]);{$EndIf}
         dpiX:=round(cXmax+cXmax*X/Xmax);
         jmax:=round(cw/Xmax/2);
         if Level.isWall[fullPosition] then
@@ -277,7 +277,7 @@ begin
           {$EndIf}
           {$IfDef DBG}if dbg then
             {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clRed;{$EndIf}
-          {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, clRed);{$EndIf}
+          //{$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, clRed);{$EndIf}
           {$IfDef DBG}if dbg then jmax:=0;{$EndIf}
           //if animate then jmax:=0;
           for i:=-(imax) to (imax) do
@@ -324,7 +324,7 @@ begin
           if Level.FloorDec[fullPosition] then
           begin
             drawPixelI(imax, j, $00FF00);
-            {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, $00FF00);{$EndIf}
+            //{$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, $00FF00);{$EndIf}
           end;
         {$EndIf}
       end;

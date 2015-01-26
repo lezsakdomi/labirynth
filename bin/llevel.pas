@@ -17,6 +17,7 @@ type
       FMap: TLMap;
       FPlayerPosition: TLPlayerPosition;
       FwallMod: Integer;
+      FDeath, FReachedWin, FCanWin: Boolean;
   public
     {types and vars}
     type
@@ -63,6 +64,10 @@ type
     function getIsWall(APosition: TL2DPosition=nil): Boolean;
     property isWall[APosition: TL2DPosition]: Boolean read getIsWall;
 
+    property Death: Boolean read FDeath;
+    property ReachedWin: Boolean read FReachedWin;
+    property CanWin: Boolean read FCanWin;
+
     function getSucessed(APosition: TL2DPosition=nil): Boolean;
     property Sucessed[APosition: TL2DPosition]: Boolean read getSucessed;
 
@@ -88,6 +93,7 @@ begin
   PlayerPosition.coords:=ini.ReadPoint('Player', 'coords', Point(round(Width/2), round(Height/2)));
   PlayerPosition.direction:=ini.ReadFloat('Player', 'direction', 0);
   FwallMod:=ini.ReadInteger('Map', 'wallmod', 1);
+  FDeath:=ini.ReadBool('Player', 'death', False);
 end;
 
 function TLLevel.move(
@@ -120,15 +126,20 @@ begin
     //((0<=Value.direction) and (Value.direction<=1)) and
     ((0<=Value.X) and (Value.X<=maxx)) and
     ((0<=Value.Y) and (Value.Y<=maxy)) and
-    not isWall[Value]
+    (not isWall[Value])
   );
 end;
 
 procedure TLLevel.setPlayerPosition(Value: TLPlayerPosition);
 begin
-  if isPlayerPosition(Value) and (not isWall[Value]) then
+  if isPlayerPosition(Value) then
   begin
     FPlayerPosition:=Value;
+    if (data[Value]=clBlue) then FCanWin:=True;
+    if (data[PlayerPosition]=clGreen) then FReachedWin:=True;
+  end else
+  begin
+    if (data[Value]=clRed) then FDeath:=True;
   end;
 end;
 
@@ -215,7 +226,7 @@ end;
 
 function TLLevel.getSucessed(APosition: TL2DPosition=nil): Boolean;
 begin
-  Result:=data[PlayerPosition]=clGreen;
+  Result:=ReachedWin and CanWin;
 end;
 
 function TLLevel.getFloorDec(APosition: TL2DPosition=nil): Boolean;

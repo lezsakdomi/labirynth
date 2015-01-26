@@ -143,18 +143,21 @@ var cw, ch: Integer; //canvas
     cl: TColor
   );
   begin
-    {$IfDef LINES}
-    if ((imax+i)<>0) and (((imax+i) mod round(max(1, ((imax+imax)/5))))=0) then
-      cl:=clYellow;
-    {$EndIf}
-    {$IfDef RANDOM}
-    if (Random(round(imax/5))=1) then
-      cl:=clBlack;
-    {$EndIf}
-    Canvas.Pixels[
-      dpiX+j,
-      cYmax+i
-    ]:=cl;
+    if cl<>clWhite then
+    begin;
+      {$IfDef LINES}
+      if ((imax+i)<>0) and (((imax+i) mod round(max(1, ((imax+imax)/5))))=0) then
+        cl:=clYellow;
+      {$EndIf}
+      {$IfDef RANDOM}
+      if (Random(round(imax/5))=1) then
+        cl:=clBlack;
+      {$EndIf}
+      Canvas.Pixels[
+        dpiX+j,
+        cYmax+i
+      ]:=cl;
+    end;
   end;
 
   {$IfDef MINIMAP}
@@ -252,7 +255,7 @@ begin
         {$EndIf}
         {$IfDef DBG}if dbg then
           {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clGreen;{$EndIf}
-        {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, clGreen);{$EndIf}
+        {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, {clGreen}Level.data[fullPosition]);{$EndIf}
         dpiX:=round(cXmax+cXmax*X/Xmax);
         jmax:=round(cw/Xmax/2);
         if Level.isWall[fullPosition] then
