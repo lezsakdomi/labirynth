@@ -10,15 +10,20 @@ uses
 
 type
   TLIniFile=class(TIniFile)
+  {$Define PARENT_AS_L}
+  private
+    var
+      FParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf};
   public
     {types and variables}
     type
       TLIniFileArray=array of TLIniFile;
   public
     {functions and procedures}
-    //constructor Create(const AFileName: string; AEscapeLineFeeds: Boolean=False);
+    constructor Create(const AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
+    function ReadString(const Section, Ident, Default: string; UseParent: Boolean=True): string;
     procedure ParseFn(var AFn: TLFn);
-    function ReadFn(const Section, Ident: String; Default: TLFn): TLFn;
+    function ReadFn(const Section, Ident: String; Default: TLFn; UseParent: Boolean=True): TLFn;
     function ReadFnArray(const Ident: String): TLFnArray;
     procedure WriteFn(const Section, Ident: String; Value: TLFn);
     function ReadIni(const Section, Ident: String; Default: TLIniFile=Nil): TLIniFile;
@@ -35,11 +40,61 @@ type
     function ReadL3DSize(const Section, Ident: String; Default: TL3DSize=Nil): TL3DSize;
     procedure WriteL3DSize(const Section, Ident: String; Value: TL3DSize);
     function ReadBitmap(const Section, Ident: String; Default: TBitmap): TBitmap;
+  public
+    {propertyes}
+    property Parent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf} read FParent;
+  protected
+    //property FSectionList: TIniFileSectionList read FSectionList write FSectionList;
   end;
 
   TLIniFileArray=TLIniFile.TLIniFileArray;
 
 implementation
+
+constructor TLIniFile.Create(const AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
+begin
+  inherited Create(AFileName, AEscapeLineFeeds);
+  FParent:=AParent;
+end;
+
+function TLIniFile.ReadString(const Section, Ident, Default: string; UseParent: Boolean=True): string;
+(*
+var
+  oSection: TIniFileSection;
+  oKey: TIniFileKey;
+  J: integer;
+  found: Boolean;
+begin
+  Result := Default;
+  oSection := SectionList.SectionByName(Section,CaseSensitive);
+  if oSection <> nil then begin
+    oKey := oSection.KeyList.KeyByName(Ident,CaseSensitive);
+    if oKey <> nil then
+      If StripQuotes then
+      begin
+        J:=Length(oKey.Value);
+        If (J>1) and ((oKey.Value[1] in ['"','''']) and (oKey.Value[J]=oKey.Value[1])) then
+           Result:=Copy(oKey.Value,2,J-2)
+        else
+           Result:=oKey.Value;
+        found:=True;
+      end
+      else Result:=oKey.Value;
+  end;
+  if ((not found) and (Parent<>Nil)) then
+    Result:=Parent.ReadString(Section, Ident, Default);
+end;
+*)
+begin
+  Result:=inherited ReadString(Section, Ident, '');
+  if (Result='') then
+    if ((Parent=Nil) or (not UseParent)) then
+      Result:=Default
+    else
+    begin
+      Result:=Parent.ReadString(Section, Ident, Default);
+    end;
+end;
 
 procedure TLIniFile.ParseFn(var AFn: TLFn);
 var appname, appdir, inipath, inidir: TLFn;
@@ -52,12 +107,19 @@ begin
   inipath:=ExpandFileName(FileName);
   inidir:=ExtractFileDir(inipath);
   AFn:=CreateAbsolutePath(AFn, inidir);
+  AFn:=UTF8ToSys(AFn);
 end;
 
-function TLIniFile.ReadFn(const Section, Ident: String; Default: TLFn):TLFn;
+function TLIniFile.ReadFn(const Section, Ident: String; Default: TLFn; UseParent: Boolean=True):TLFn;
 begin
-  Result:=ReadString(Section, Ident, '');
-  if Result='' then Result:=Default;
+  Result:=ReadString(Section, Ident, '', False);
+  if (Result='') then
+    if ((Parent=Nil) or (not UseParent)) then
+      Result:=Default
+    else
+    begin
+      Result:=Parent.ReadFn(Section, Ident, Default);
+    end;
   ParseFn(Result);
 end;
 
@@ -94,7 +156,7 @@ begin
   fn:=ReadFn(Section, Ident, '');
   if fn<>'' then
   begin
-    Result:=TLIniFile.Create(fn, EscapeLineFeeds);
+    Result:=TLIniFile.Create(fn, EscapeLineFeeds, Self);
   end
   else
   begin
@@ -118,7 +180,7 @@ begin
   SetLength(Result, Length(fns));
   for i:=0 to Length(fns)-1 do
   begin
-    Result[i]:=TLIniFile.Create(fns[i]);
+    Result[i]:=TLIniFile.Create(fns[i], EscapeLineFeeds, Self);
   end;
 end;
 

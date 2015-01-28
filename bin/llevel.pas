@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, Graphics, LMap, LTypes, LIniFiles, LPosition,
-  LSize;
+  LSize{$IfDef WINDOWS}, mmsystem{$EndIf};
 
 type
   TLLevel=class(TObject)
@@ -108,7 +108,10 @@ begin
   if not isPlayerPosition(Result) then
     Result:=PlayerPosition
   else if AUpdate then
+  begin
     PlayerPosition:=Result;
+    sndPlaySound(PChar(ini.ReadFn('Visualisator', 'walk_sound', '')), SND_ASYNC or SND_NODEFAULT);
+  end;
 end;
 
 destructor TLLevel.Destroy;
