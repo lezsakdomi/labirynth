@@ -93,6 +93,7 @@ begin
   PlayerPosition.coords:=ini.ReadPoint('Player', 'coords', Point(round(Width/2), round(Height/2)));
   PlayerPosition.direction:=ini.ReadFloat('Player', 'direction', 0);
   FwallMod:=ini.ReadInteger('Map', 'wallmod', 1);
+  FCanWin:=not ini.ReadBool('Map', 'key', False);
   FDeath:=ini.ReadBool('Player', 'death', False);
 end;
 
@@ -117,6 +118,7 @@ end;
 
 function TLLevel.isPlayerPosition(Value: TLPlayerPosition):Boolean;
 var minx, maxx, miny, maxy: Integer;
+    cl: TColor;
 begin
   minx:=1;
   maxx:=Map.Size.Width;
@@ -125,8 +127,7 @@ begin
   Result:=(
     //((0<=Value.direction) and (Value.direction<=1)) and
     ((0<=Value.X) and (Value.X<=maxx)) and
-    ((0<=Value.Y) and (Value.Y<=maxy)) and
-    (not isWall[Value])
+    ((0<=Value.Y) and (Value.Y<=maxy))
   );
 end;
 
@@ -136,9 +137,7 @@ begin
   begin
     FPlayerPosition:=Value;
     if (data[Value]=clBlue) then FCanWin:=True;
-    if (data[PlayerPosition]=clGreen) then FReachedWin:=True;
-  end else
-  begin
+    if (data[Value]=clGreen) then FReachedWin:=True;
     if (data[Value]=clRed) then FDeath:=True;
   end;
 end;

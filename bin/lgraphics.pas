@@ -179,9 +179,14 @@ var cw, ch: Integer; //canvas
 begin
   if Level.getSucessed then
   begin
-    Picture.Bitmap:=ini.ReadBitmap('Visualisator', 'sucess', Nil);
+    Picture.Bitmap:=ini.ReadBitmap(iniSection, 'sucess', Nil);
     Repaint;
   end else
+  if Level.Death then
+  begin
+    Picture.Bitmap:=ini.ReadBitmap(iniSection, 'dead', Nil);
+    Repaint;
+  end;
   begin
     {$IfDef HOMOGEN}dpiCl:=clGreen;{$EndIf}
     cw:={$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Width;

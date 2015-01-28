@@ -179,9 +179,13 @@ var cw, ch: Integer; //canvas
 begin
   if Level.getSucessed then
   begin
-    Picture.Bitmap:=ini.ReadBitmap('Visualisator', 'sucess', Nil);
+    Picture.Bitmap:=ini.ReadBitmap(iniSection, 'sucess', Nil);
     Repaint;
   end else
+  if Level.Death then
+  begin
+    Picture.Bitmap:=ini.ReadBitmap(iniSection, 'dead', Nil);
+  end;
   begin
     {$IfDef HOMOGEN}dpiCl:=clGreen;{$EndIf}
     cw:={$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Width;
@@ -277,7 +281,7 @@ begin
           {$EndIf}
           {$IfDef DBG}if dbg then
             {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clRed;{$EndIf}
-          {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, clRed);{$EndIf}
+          //{$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, clRed);{$EndIf}
           {$IfDef DBG}if dbg then jmax:=0;{$EndIf}
           //if animate then jmax:=0;
           for i:=-(imax) to (imax) do
@@ -324,7 +328,7 @@ begin
           if Level.FloorDec[fullPosition] then
           begin
             drawPixelI(imax, j, $00FF00);
-            {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, $00FF00);{$EndIf}
+            //{$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, $00FF00);{$EndIf}
           end;
         {$EndIf}
       end;
