@@ -54,7 +54,7 @@ begin
   inherited Create(AOwner);
   Fini:=Aini;
   Pos:=ini.ReadL2DPosition(iniSection, 'pos', Pos);
-  Size:=ini.ReadL2DSize(iniSection, 'size', Size);
+  Size:=ini.ReadL2DSize('Form', 'size', Size);
   //Level:=TLLevel.Create(TIniFile.Create(ini.ReadFn('level', 'ini', '')));
   {
   FScreen:=TCanvas.Create;

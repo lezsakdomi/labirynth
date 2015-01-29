@@ -21,14 +21,16 @@ type
   public
     {functions and procedures}
     constructor Create(const AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
-    function ReadString(const Section, Ident, Default: string; UseParent: Boolean=True): string;
+    function ReadString(const Section, Ident: String; Default: string=''; UseParent: Boolean=True): string;
     procedure ParseFn(var AFn: TLFn);
-    function ReadFn(const Section, Ident: String; Default: TLFn; UseParent: Boolean=True): TLFn;
+    function ReadFn(const Section, Ident: String; Default: TLFn=''; UseParent: Boolean=True): TLFn;
     function ReadFnArray(const Ident: String): TLFnArray;
     procedure WriteFn(const Section, Ident: String; Value: TLFn);
-    function ReadIni(const Section, Ident: String; Default: TLIniFile=Nil): TLIniFile;
+    function ReadIni(const Section: String; Ident: String='ini'; Default: TLIniFile=Nil): TLIniFile;
     function ReadIniArray(const Ident: String): TLIniFileArray;
-    procedure WriteIni(const Section, Ident: String; Value: TLIniFile);
+    procedure WriteIni(const Section: String; Ident: String='ini'; Value: TLIniFile=Nil);
+    function ReadArray(const Section, Ident: String; Default: TStringArray=Nil; Delimeter: Char=','): TStringArray;
+    procedure WriteArray(const Section, Ident: String; Value: TStringArray; Delimeter: Char=',');
     function ReadPoint(const Section, Ident: String; Default: TPoint): TPoint;
     procedure WritePoint(const Section, Ident: String; Value: TPoint);
     function ReadL2DPosition(const Section, Ident: String; Default: TL2DPosition=Nil): TL2DPosition;
@@ -57,7 +59,7 @@ begin
   FParent:=AParent;
 end;
 
-function TLIniFile.ReadString(const Section, Ident, Default: string; UseParent: Boolean=True): string;
+function TLIniFile.ReadString(const Section, Ident: String; Default: string=''; UseParent: Boolean=True): string;
 (*
 var
   oSection: TIniFileSection;
@@ -88,7 +90,7 @@ end;
 begin
   Result:=inherited ReadString(Section, Ident, '');
   if (Result='') then
-    if ((Parent=Nil) and (UseParent)) then
+    if ((Parent=Nil) or (not UseParent)) then
       Result:=Default
     else
     begin
@@ -114,7 +116,7 @@ function TLIniFile.ReadFn(const Section, Ident: String; Default: TLFn; UseParent
 begin
   Result:=ReadString(Section, Ident, '', False);
   if (Result='') then
-    if ((Parent=Nil) and (UseParent)) then
+    if ((Parent=Nil) or (not UseParent)) then
       Result:=Default
     else
     begin
@@ -150,7 +152,7 @@ begin
   CopyFile(fnFrom, fnTo);
 end;
 
-function TLIniFile.ReadIni(const Section, Ident: String; Default: TLIniFile=Nil): TLIniFile;
+function TLIniFile.ReadIni(const Section: String; Ident: String='ini'; Default: TLIniFile=Nil): TLIniFile;
 var fn: TLFn;
 begin
   fn:=ReadFn(Section, Ident, '');
@@ -184,12 +186,27 @@ begin
   end;
 end;
 
-procedure TLIniFile.WriteIni(const Section, Ident: String; Value: TLIniFile);
+procedure TLIniFile.WriteIni(const Section: String; Ident: String='ini'; Value: TLIniFile);
 var fn: TLFn;
 begin
   fn:=Value.FileName;
   Value.Free;
   WriteFn(Section, Ident, fn);
+end;
+
+function TLIniFile.ReadArray(const Section, Ident: String; Default: TStringArray=Nil; Delimeter: Char=','): TStringArray;
+var s: String;
+begin
+  s:=ReadString(Section, Ident, '');
+  if (s='') then
+    Result:=Default
+  else
+    Result:=StrToArray(s, Delimeter);
+end;
+
+procedure TLIniFile.WriteArray(const Section, Ident: String; Value: TStringArray; Delimeter: Char=',');
+begin
+  WriteString(Section, Ident, ArrayToStr(Value, Delimeter));
 end;
 
 function TLIniFile.ReadPoint(const Section, Ident: String; Default: TPoint): TPoint;

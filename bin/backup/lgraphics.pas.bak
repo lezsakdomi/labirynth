@@ -185,6 +185,7 @@ begin
   if Level.Death then
   begin
     Picture.Bitmap:=ini.ReadBitmap(iniSection, 'dead', Nil);
+    Repaint;
   end;
   begin
     {$IfDef HOMOGEN}dpiCl:=clGreen;{$EndIf}

@@ -1,0 +1,80 @@
+object Form1: TForm1
+  Left = 242
+  Height = 284
+  Top = 117
+  Width = 481
+  Caption = 'Form1'
+  ClientHeight = 284
+  ClientWidth = 481
+  OnCreate = FormCreate
+  LCLVersion = '1.2.6.0'
+  object music: TToggleBox
+    Left = 0
+    Height = 23
+    Top = 0
+    Width = 90
+    Caption = 'Zene'
+    OnChange = musicChange
+    TabOrder = 0
+  end
+  object musicFn: TEdit
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 96
+    Height = 23
+    Top = 0
+    Width = 385
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 1
+    Text = 'musicFn'
+  end
+  object drawcorner: TToggleBox
+    Left = 0
+    Height = 23
+    Top = 24
+    Width = 90
+    Caption = 'Szélek'
+    OnChange = drawcornerChange
+    TabOrder = 2
+  end
+  object animate: TToggleBox
+    Left = 0
+    Height = 23
+    Top = 48
+    Width = 90
+    Caption = 'Animálás'
+    OnChange = animateChange
+    TabOrder = 3
+  end
+  object Size: TButton
+    Left = 0
+    Height = 23
+    Top = 72
+    Width = 90
+    Caption = 'Méret'
+    OnClick = SizeClick
+    TabOrder = 4
+  end
+  object ToggleBox1: TToggleBox
+    Left = 0
+    Height = 23
+    Top = 96
+    Width = 90
+    Caption = 'ToggleBox1'
+    TabOrder = 5
+  end
+  object sizeText: TEdit
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 96
+    Height = 23
+    Top = 72
+    Width = 385
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 6
+    Text = 'sizeText'
+  end
+  object OpenDialog1: TOpenDialog
+    left = 453
+  end
+end
