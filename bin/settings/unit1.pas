@@ -6,26 +6,32 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, ExtCtrls, LIniFiles, LSize;
+  ComCtrls, ExtCtrls, LIniFiles, LSize, math;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
+    keydetectButton: TButton;
+    Label1: TLabel;
     sizeText: TEdit;
     Size: TButton;
-    musicFn: TEdit;
+    music: TEdit;
     OpenDialog1: TOpenDialog;
-    music: TToggleBox;
+    musicToggle: TToggleBox;
     drawcorner: TToggleBox;
     animate: TToggleBox;
-    ToggleBox1: TToggleBox;
+    timer: TToggleBox;
+    timerinterval: TTrackBar;
+    keydetect: TTrackBar;
     procedure animateChange(Sender: TObject);
+    procedure keydetectButtonClick(Sender: TObject);
     procedure drawcornerChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure musicChange(Sender: TObject);
+    procedure musicToggleChange(Sender: TObject);
     procedure SizeClick(Sender: TObject);
+    procedure timerChange(Sender: TObject);
     procedure Update;
   private
     { private declarations }
@@ -54,23 +60,39 @@ end;
 procedure TForm1.Update;
 begin
   updatingInProgress:=True;
+  Color:=clWhite;
+  Repaint;
+
   VisualisatorIni:=MainIni.ReadIni('Visualisator');
-  music.Checked:=MainIni.ReadFn('Form', 'music')<>'';
-  musicFn.Text:=MainIni.ReadFn('Form', 'music');
+  musicToggle.Checked:=MainIni.ReadFn('Form', 'music')<>'';
+  music.Text:=MainIni.ReadFn('Form', 'music');
   drawcorner.Checked:=VisualisatorIni.ReadBool('Visualisator', 'drawcorner', True);
   animate.Checked:=VisualisatorIni.ReadBool('Visualisator', 'animate', True);
   sizeText.Text:=MainIni.ReadString('Form', 'size');
+  timer.Checked:=MainIni.ReadBool('Form', 'timer', True);
+  timerinterval.Position:=1000-MainIni.ReadInteger('Form', 'timerinterval', 1000);
+  keydetect.Position:=MainIni.ReadInteger('Form', 'keydetect', 500);
+
+  timerinterval.Visible:=timer.Checked;
+  music.Visible:=musicToggle.Checked;
+
   updatingInProgress:=False;
+  Color:=clDefault;
+  Repaint;
 end;
 
-procedure TForm1.musicChange(Sender: TObject);
+procedure TForm1.musicToggleChange(Sender: TObject);
 begin
   if not updatingInProgress then
   begin
-    if music.Checked and OpenDialog1.Execute then
-      MainIni.WriteFn('Form', 'music', OpenDialog1.FileName)
+    Color:=clRed;
+    Repaint;
+    if musicToggle.Checked and OpenDialog1.Execute then
+      MainIni.WriteString('Form', 'music', OpenDialog1.FileName)
     else
       MainIni.WriteString('Form', 'music', '');
+    Color:=clGreen;
+    Repaint;
     Update;
   end;
 end;
@@ -80,6 +102,8 @@ var value: TL2DSize;
 begin
   if not updatingInProgress then
   begin
+    Color:=clRed;
+    Repaint;
     value:=StrToL2DSize(
       InputBox(
         'Méret',
@@ -94,6 +118,33 @@ begin
     );
     MainIni.WriteL2DSize('Form', 'size', value);
     //VisualisatorIni.WriteL2DSize('Visaualisator', 'size', value);
+    Color:=clGreen;
+    Repaint;
+    Update;
+  end;
+end;
+
+procedure TForm1.timerChange(Sender: TObject);
+begin
+  if not updatingInProgress then
+  begin
+    Color:=clRed;
+    Repaint;
+    if timer.Checked then
+    begin
+      MainIni.WriteInteger(
+        'Form',
+        'timerinterval',
+        round(1000/max(1, StrToFloat(InputBox(
+            'FPS',
+            'Írd be a kívánt FPS-t!',
+            IntToStr(round(1000/MainIni.ReadInteger('Form', 'timerinterval', 1000)))
+        ))))
+      );
+    end;
+    MainIni.WriteBool('Form', 'timer', timer.Checked);
+    Color:=clGreen;
+    Repaint;
     Update;
   end;
 end;
@@ -102,7 +153,11 @@ procedure TForm1.drawcornerChange(Sender: TObject);
 begin
   if not updatingInProgress then
   begin
+    Color:=clRed;
+    Repaint;
     VisualisatorIni.WriteBool('Visualisator', 'drawcorner', drawcorner.Checked);
+    Color:=clGreen;
+    Repaint;
     Update;
   end;
 end;
@@ -111,7 +166,38 @@ procedure TForm1.animateChange(Sender: TObject);
 begin
   if not updatingInProgress then
   begin
+    Color:=clRed;
+    Repaint;
     VisualisatorIni.WriteBool('Visualisator', 'animate', animate.Checked);
+    Color:=clGreen;
+    Repaint;
+    Update;
+  end;
+end;
+
+procedure TForm1.keydetectButtonClick(Sender: TObject);
+begin
+  if not updatingInProgress then
+  begin
+    Color:=clRed;
+    Repaint;
+    MainIni.WriteInteger(
+      'Form',
+      'Keydetect',
+      StrToInt(InputBox(
+        'Sebesség',
+        'Add meg a sebessége ezredmásodperc/pixel-ben!',
+        IntToStr(
+          MainIni.ReadInteger(
+            'Form',
+            'keydetect',
+            500
+          )
+        ))
+      )
+    );
+    Color:=clGreen;
+    Repaint;
     Update;
   end;
 end;

@@ -4,25 +4,26 @@
     <PathDelim Value="\"/>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="16">
+    <Units Count="23">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="project1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
       </Unit0>
       <Unit1>
         <Filename Value="unit1.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="40"/>
-        <CursorPos X="1" Y="55"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="52"/>
+        <CursorPos X="11" Y="64"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -30,22 +31,22 @@
         <Filename Value="..\linifiles.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LIniFiles"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="102"/>
-        <CursorPos X="1" Y="116"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="134"/>
+        <CursorPos X="1" Y="151"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\lposition.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LPosition"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="9"/>
         <WindowIndex Value="0"/>
         <TopLine Value="185"/>
         <CursorPos X="6" Y="192"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -57,252 +58,281 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
       </Unit4>
       <Unit5>
         <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="IniFiles"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="742"/>
-        <CursorPos X="1" Y="757"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="473"/>
+        <CursorPos X="1" Y="493"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\lgraphics.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LGraphics"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="43"/>
+        <CursorPos X="30" Y="57"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\llevel.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LLevel"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\lmap.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LMap"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\lpixel.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LPixel"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit9>
       <Unit10>
         <Filename Value="..\lpixelstorage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LPixelStorage"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="7"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit10>
       <Unit11>
         <Filename Value="..\lpoint.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LPoint"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="8"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit11>
       <Unit12>
         <Filename Value="..\lsize.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LSize"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="10"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
         <Filename Value="..\ltexture.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LTexture"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="11"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit13>
       <Unit14>
         <Filename Value="..\ltypes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LTypes"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="12"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit14>
       <Unit15>
         <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
-        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="124"/>
+        <TopLine Value="120"/>
         <CursorPos X="1" Y="147"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="12"/>
       </Unit15>
+      <Unit16>
+        <Filename Value="C:\lazarus\lcl\include\filedialog.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="38"/>
+        <CursorPos X="1" Y="54"/>
+        <UsageCount Value="10"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="C:\lazarus\components\lazutils\fileutil.pas"/>
+        <UnitName Value="FileUtil"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="247"/>
+        <CursorPos X="35" Y="86"/>
+        <UsageCount Value="10"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="C:\lazarus\components\lazutils\winfileutil.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="12"/>
+        <CursorPos X="19" Y="3"/>
+        <UsageCount Value="10"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="C:\lazarus\components\lazutils\fileutil.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="312"/>
+        <CursorPos X="37" Y="332"/>
+        <UsageCount Value="10"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="C:\lazarus\components\lazutils\lazfileutils.pas"/>
+        <UnitName Value="LazFileUtils"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="194"/>
+        <CursorPos X="24" Y="200"/>
+        <UsageCount Value="10"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="3630"/>
+        <CursorPos X="1" Y="3645"/>
+        <UsageCount Value="10"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="5982"/>
+        <CursorPos X="1" Y="6004"/>
+        <UsageCount Value="10"/>
+      </Unit22>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="25" HistoryIndex="24">
       <Position1>
-        <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
-        <Caret Line="147" Column="1" TopLine="126"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="70" Column="1" TopLine="46"/>
       </Position1>
       <Position2>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="55" Column="1" TopLine="37"/>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
+        <Caret Line="488" Column="1" TopLine="473"/>
       </Position2>
       <Position3>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="116" Column="1" TopLine="102"/>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
+        <Caret Line="489" Column="1" TopLine="473"/>
       </Position3>
       <Position4>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="117" Column="1" TopLine="102"/>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
+        <Caret Line="490" Column="1" TopLine="473"/>
       </Position4>
       <Position5>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="55" Column="1" TopLine="37"/>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
+        <Caret Line="491" Column="1" TopLine="473"/>
       </Position5>
       <Position6>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="116" Column="1" TopLine="102"/>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
+        <Caret Line="492" Column="1" TopLine="473"/>
       </Position6>
       <Position7>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="117" Column="1" TopLine="102"/>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
+        <Caret Line="493" Column="1" TopLine="473"/>
       </Position7>
       <Position8>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="118" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="124" Column="1" TopLine="109"/>
       </Position8>
       <Position9>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="119" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="144" Column="1" TopLine="130"/>
       </Position9>
       <Position10>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="120" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="124" Column="1" TopLine="109"/>
       </Position10>
       <Position11>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="125" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="126" Column="1" TopLine="109"/>
       </Position11>
       <Position12>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="126" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="124" Column="1" TopLine="109"/>
       </Position12>
       <Position13>
-        <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
-        <Caret Line="130" Column="1" TopLine="124"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="126" Column="1" TopLine="109"/>
       </Position13>
       <Position14>
-        <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
-        <Caret Line="131" Column="1" TopLine="124"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="127" Column="1" TopLine="109"/>
       </Position14>
       <Position15>
-        <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
-        <Caret Line="134" Column="1" TopLine="124"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="144" Column="6" TopLine="88"/>
       </Position15>
       <Position16>
-        <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
-        <Caret Line="136" Column="1" TopLine="124"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="98" Column="3" TopLine="95"/>
       </Position16>
       <Position17>
-        <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
-        <Caret Line="147" Column="1" TopLine="124"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="81" Column="3" TopLine="79"/>
       </Position17>
       <Position18>
         <Filename Value="unit1.pas"/>
-        <Caret Line="56" Column="1" TopLine="37"/>
+        <Caret Line="74" Column="39" TopLine="52"/>
       </Position18>
       <Position19>
         <Filename Value="unit1.pas"/>
-        <Caret Line="57" Column="1" TopLine="37"/>
+        <Caret Line="151" Column="3" TopLine="149"/>
       </Position19>
       <Position20>
         <Filename Value="unit1.pas"/>
-        <Caret Line="55" Column="1" TopLine="37"/>
+        <Caret Line="121" Column="6" TopLine="52"/>
       </Position20>
       <Position21>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="116" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="126" Column="3" TopLine="124"/>
       </Position21>
       <Position22>
         <Filename Value="unit1.pas"/>
-        <Caret Line="55" Column="1" TopLine="37"/>
+        <Caret Line="75" Column="38" TopLine="52"/>
       </Position22>
       <Position23>
         <Filename Value="unit1.pas"/>
-        <Caret Line="114" Column="11" TopLine="90"/>
+        <Caret Line="12" Column="13" TopLine="7"/>
       </Position23>
       <Position24>
         <Filename Value="unit1.pas"/>
-        <Caret Line="31" Column="8" TopLine="17"/>
+        <Caret Line="24" Column="30" TopLine="7"/>
       </Position24>
       <Position25>
         <Filename Value="unit1.pas"/>
-        <Caret Line="32" Column="5" TopLine="17"/>
+        <Caret Line="23" Column="25" TopLine="7"/>
       </Position25>
-      <Position26>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="67" Column="28" TopLine="53"/>
-      </Position26>
-      <Position27>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="80" Column="28" TopLine="65"/>
-      </Position27>
-      <Position28>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="102" Column="28" TopLine="87"/>
-      </Position28>
-      <Position29>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="111" Column="28" TopLine="90"/>
-      </Position29>
-      <Position30>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="63" Column="28" TopLine="40"/>
-      </Position30>
     </JumpHistory>
   </ProjectSession>
   <EditorMacros Count="0"/>

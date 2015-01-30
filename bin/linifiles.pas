@@ -148,7 +148,7 @@ procedure TLIniFile.WriteFn(const Section, Ident: String; Value: TLFn);
 var fnFrom, fnTo: TLFn;
 begin
   fnFrom:=Value;
-  fnTo:=ReadFn(Section, Ident, 'RAND_'+IntToStr(Random(MaxInt))+'.ini');
+  fnTo:=ReadFn(Section, Ident, 'RAND_'+IntToStr(Random(MaxInt))+'_'+ExtractFileNameOnly(Value));
   CopyFile(fnFrom, fnTo);
 end;
 

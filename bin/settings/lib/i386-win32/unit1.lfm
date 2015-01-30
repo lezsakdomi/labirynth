@@ -8,71 +8,180 @@ object Form1: TForm1
   ClientWidth = 481
   OnCreate = FormCreate
   LCLVersion = '1.2.6.0'
-  object music: TToggleBox
+  object musicToggle: TToggleBox
     Left = 0
     Height = 23
     Top = 0
     Width = 90
     Caption = 'Zene'
-    OnChange = musicChange
+    OnChange = musicToggleChange
     TabOrder = 0
   end
-  object musicFn: TEdit
+  object music: TEdit
+    AnchorSideLeft.Control = musicToggle
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = musicToggle
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 96
+    AnchorSideBottom.Control = musicToggle
+    AnchorSideBottom.Side = asrBottom
+    Left = 90
     Height = 23
     Top = 0
-    Width = 385
-    Anchors = [akTop, akLeft, akRight]
+    Width = 391
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Enabled = False
     TabOrder = 1
-    Text = 'musicFn'
+    Text = 'music'
   end
   object drawcorner: TToggleBox
+    AnchorSideLeft.Control = musicToggle
+    AnchorSideTop.Control = musicToggle
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = musicToggle
+    AnchorSideRight.Side = asrBottom
     Left = 0
     Height = 23
-    Top = 24
+    Top = 23
     Width = 90
+    Anchors = [akTop, akLeft, akRight]
     Caption = 'Szélek'
     OnChange = drawcornerChange
     TabOrder = 2
   end
   object animate: TToggleBox
+    AnchorSideLeft.Control = drawcorner
+    AnchorSideTop.Control = drawcorner
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = drawcorner
+    AnchorSideRight.Side = asrBottom
     Left = 0
     Height = 23
-    Top = 48
+    Top = 46
     Width = 90
+    Anchors = [akTop, akLeft, akRight]
     Caption = 'Animálás'
     OnChange = animateChange
     TabOrder = 3
   end
   object Size: TButton
+    AnchorSideLeft.Control = animate
+    AnchorSideTop.Control = animate
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = animate
+    AnchorSideRight.Side = asrBottom
+    Cursor = crHandPoint
     Left = 0
-    Height = 23
-    Top = 72
+    Height = 25
+    Top = 69
     Width = 90
+    Anchors = [akTop, akLeft, akRight]
     Caption = 'Méret'
     OnClick = SizeClick
     TabOrder = 4
   end
-  object ToggleBox1: TToggleBox
+  object timer: TToggleBox
+    AnchorSideLeft.Control = Size
+    AnchorSideTop.Control = Size
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Size
+    AnchorSideRight.Side = asrBottom
     Left = 0
     Height = 23
-    Top = 96
+    Top = 94
     Width = 90
-    Caption = 'ToggleBox1'
+    Anchors = [akTop, akLeft, akRight]
+    Caption = 'Fix FPS'
+    OnChange = timerChange
     TabOrder = 5
   end
   object sizeText: TEdit
+    AnchorSideLeft.Control = Size
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Size
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 96
-    Height = 23
-    Top = 72
-    Width = 385
-    Anchors = [akTop, akLeft, akRight]
+    AnchorSideBottom.Control = Size
+    AnchorSideBottom.Side = asrBottom
+    Left = 90
+    Height = 25
+    Top = 69
+    Width = 391
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Enabled = False
     TabOrder = 6
     Text = 'sizeText'
+  end
+  object keydetectButton: TButton
+    AnchorSideLeft.Control = timer
+    AnchorSideTop.Control = timer
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = timer
+    AnchorSideRight.Side = asrBottom
+    Cursor = crHandPoint
+    Left = 0
+    Height = 25
+    Top = 117
+    Width = 90
+    Anchors = [akTop, akLeft, akRight]
+    Caption = 'Sebesség'
+    OnClick = keydetectButtonClick
+    TabOrder = 8
+  end
+  object keydetect: TTrackBar
+    AnchorSideLeft.Control = keydetectButton
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = keydetectButton
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = keydetectButton
+    AnchorSideBottom.Side = asrBottom
+    Left = 90
+    Height = 25
+    Top = 117
+    Width = 391
+    Max = 1000
+    Position = 0
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Enabled = False
+    TabOrder = 9
+  end
+  object timerinterval: TTrackBar
+    AnchorSideLeft.Control = timer
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = timer
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = timer
+    AnchorSideBottom.Side = asrBottom
+    Left = 90
+    Height = 23
+    Top = 94
+    Width = 391
+    Max = 1000
+    Position = 1
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Enabled = False
+    TabOrder = 7
+  end
+  object Label1: TLabel
+    AnchorSideLeft.Control = timer
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = timer
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = timer
+    AnchorSideBottom.Side = asrBottom
+    Left = 90
+    Height = 23
+    Top = 94
+    Width = 391
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Caption = 'Használd a szóköz billentyűt a frissítéshez!'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
   end
   object OpenDialog1: TOpenDialog
     left = 453
