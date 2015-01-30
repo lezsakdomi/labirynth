@@ -53,8 +53,9 @@ type
 
 implementation
 
-constructor TLIniFile.Create(const AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
+constructor TLIniFile.Create(AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
 begin
+  ParseFn(AFileName);
   inherited Create(AFileName, AEscapeLineFeeds);
   FParent:=AParent;
 end;
@@ -148,7 +149,7 @@ procedure TLIniFile.WriteFn(const Section, Ident: String; Value: TLFn);
 var fnFrom, fnTo: TLFn;
 begin
   fnFrom:=Value;
-  fnTo:=ReadFn(Section, Ident, 'RAND_'+IntToStr(Random(MaxInt))+'.'+FileUtil.);
+  fnTo:=ReadFn(Section, Ident, 'RAND_'+IntToStr(Random(MaxInt))+'_'+ExtractFileNameOnly(Value));
   CopyFile(fnFrom, fnTo);
 end;
 

@@ -62,7 +62,8 @@ begin
   FScreen.Height:=FMap.data.Height;
   }
   Parent:=AOwner;
-  if (ini.ReadFn(iniSection, 'splash', '')<>'') then Picture.Bitmap.LoadFromFile(ini.ReadFn(iniSection, 'splash', ''));
+  Stretch:=ini.ReadBool(iniSection, 'sctretch', True);
+  Picture.Bitmap:=ini.ReadBitmap(iniSection, 'splash', Picture.Bitmap);
   //Picture.Bitmap.LoadFromFile('C:\Users\lezsakd12a\Desktop\Labirynth\source\motortest\splash.bmp');
   dbg:=ini.ReadBool(iniSection, 'dbg', false);
   Animate:=ini.ReadBool(iniSection, 'animate', false);

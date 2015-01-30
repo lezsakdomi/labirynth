@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="36">
+    <Units Count="37">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -13,7 +13,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="18"/>
-        <UsageCount Value="76"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -23,11 +23,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="129"/>
-        <CursorPos X="1" Y="144"/>
-        <UsageCount Value="76"/>
+        <TopLine Value="1"/>
+        <CursorPos X="68" Y="10"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -39,7 +40,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="4" Y="13"/>
-        <UsageCount Value="76"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -48,12 +49,12 @@
         <UnitName Value="LGraphics"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="173"/>
-        <CursorPos X="33" Y="175"/>
-        <UsageCount Value="76"/>
+        <TopLine Value="42"/>
+        <CursorPos X="44" Y="65"/>
+        <UsageCount Value="78"/>
         <Bookmarks Count="2">
-          <Item0 X="1" Y="99" ID="0"/>
-          <Item1 X="1" Y="175" ID="1"/>
+          <Item0 X="1" Y="100" ID="0"/>
+          <Item1 X="1" Y="176" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit3>
@@ -61,12 +62,11 @@
         <Filename Value="..\linifiles.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LIniFiles"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="75"/>
-        <CursorPos X="1" Y="89"/>
-        <UsageCount Value="76"/>
+        <TopLine Value="82"/>
+        <CursorPos X="24" Y="23"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
@@ -75,9 +75,9 @@
         <UnitName Value="LLevel"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="97"/>
-        <CursorPos X="45" Y="114"/>
-        <UsageCount Value="76"/>
+        <TopLine Value="216"/>
+        <CursorPos X="1" Y="231"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -88,7 +88,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="40"/>
         <CursorPos X="1" Y="44"/>
-        <UsageCount Value="76"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
@@ -99,7 +99,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="8"/>
         <CursorPos X="79" Y="8"/>
-        <UsageCount Value="76"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
@@ -110,7 +110,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="14"/>
         <CursorPos X="35" Y="31"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="76"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
@@ -121,7 +121,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="52" Y="14"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="76"/>
         <Loaded Value="True"/>
       </Unit9>
       <Unit10>
@@ -132,7 +132,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="63"/>
         <CursorPos X="1" Y="78"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="76"/>
         <Loaded Value="True"/>
       </Unit10>
       <Unit11>
@@ -143,7 +143,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="60"/>
         <CursorPos X="17" Y="76"/>
-        <UsageCount Value="69"/>
+        <UsageCount Value="71"/>
         <Loaded Value="True"/>
       </Unit11>
       <Unit12>
@@ -157,7 +157,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="3" Y="11"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit12>
@@ -173,15 +173,15 @@
         <Filename Value="C:\lazarus\lcl\extctrls.pp"/>
         <UnitName Value="ExtCtrls"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="223"/>
-        <CursorPos X="26" Y="248"/>
-        <UsageCount Value="9"/>
+        <TopLine Value="1295"/>
+        <CursorPos X="25" Y="473"/>
+        <UsageCount Value="10"/>
       </Unit14>
       <Unit15>
         <Filename Value="C:\lazarus\lcl\include\customimage.inc"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="12"/>
-        <CursorPos X="1" Y="27"/>
+        <TopLine Value="56"/>
+        <CursorPos X="34" Y="77"/>
         <UsageCount Value="13"/>
       </Unit15>
       <Unit16>
@@ -327,8 +327,8 @@
         <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
         <UnitName Value="IniFiles"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="141"/>
-        <CursorPos X="10" Y="158"/>
+        <TopLine Value="107"/>
+        <CursorPos X="5" Y="123"/>
         <UsageCount Value="11"/>
       </Unit34>
       <Unit35>
@@ -338,9 +338,16 @@
         <WindowIndex Value="0"/>
         <TopLine Value="2598"/>
         <CursorPos X="10" Y="2613"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit35>
+      <Unit36>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\rtl\win\wininc\struct.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="2927"/>
+        <CursorPos X="6" Y="2942"/>
+        <UsageCount Value="10"/>
+      </Unit36>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
@@ -348,123 +355,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="107" Column="1" TopLine="86"/>
+        <Caret Line="110" Column="1" TopLine="99"/>
       </Position1>
       <Position2>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="108" Column="1" TopLine="86"/>
+        <Caret Line="111" Column="1" TopLine="99"/>
       </Position2>
       <Position3>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="109" Column="1" TopLine="86"/>
+        <Caret Line="110" Column="1" TopLine="99"/>
       </Position3>
       <Position4>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="110" Column="1" TopLine="86"/>
+        <Caret Line="109" Column="1" TopLine="99"/>
       </Position4>
       <Position5>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="111" Column="1" TopLine="87"/>
+        <Caret Line="110" Column="1" TopLine="99"/>
       </Position5>
       <Position6>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="117" Column="1" TopLine="102"/>
+        <Caret Line="115" Column="47" TopLine="99"/>
       </Position6>
       <Position7>
-        <Filename Value="..\llevel.pas"/>
-        <Caret Line="113" Column="1" TopLine="97"/>
+        <Filename Value="..\linifiles.pas"/>
+        <Caret Line="89" Column="1" TopLine="76"/>
       </Position7>
       <Position8>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="114" Column="1" TopLine="102"/>
+        <Caret Line="90" Column="1" TopLine="76"/>
       </Position8>
       <Position9>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="115" Column="1" TopLine="102"/>
+        <Caret Line="91" Column="1" TopLine="76"/>
       </Position9>
       <Position10>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="116" Column="1" TopLine="102"/>
+        <Caret Line="117" Column="30" TopLine="96"/>
       </Position10>
       <Position11>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="117" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="98" Column="78" TopLine="78"/>
       </Position11>
       <Position12>
-        <Filename Value="..\llevel.pas"/>
-        <Caret Line="115" Column="1" TopLine="97"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="103" Column="34" TopLine="79"/>
       </Position12>
       <Position13>
         <Filename Value="unit1.pas"/>
-        <Caret Line="144" Column="1" TopLine="129"/>
+        <Caret Line="131" Column="3" TopLine="129"/>
       </Position13>
       <Position14>
-        <Filename Value="..\llevel.pas"/>
-        <Caret Line="113" Column="1" TopLine="97"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="137" Column="3" TopLine="135"/>
       </Position14>
       <Position15>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="114" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="150" Column="3" TopLine="96"/>
       </Position15>
       <Position16>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="115" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="64" Column="78" TopLine="49"/>
       </Position16>
       <Position17>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="116" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="100" Column="9" TopLine="75"/>
       </Position17>
       <Position18>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="117" Column="1" TopLine="102"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="106" Column="42" TopLine="84"/>
       </Position18>
       <Position19>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="109" Column="3" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="107" Column="42" TopLine="85"/>
       </Position19>
       <Position20>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="110" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="106" Column="42" TopLine="84"/>
       </Position20>
       <Position21>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="111" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="103" Column="25" TopLine="47"/>
       </Position21>
       <Position22>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="110" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="104" Column="25" TopLine="75"/>
       </Position22>
       <Position23>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="109" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="103" Column="25" TopLine="74"/>
       </Position23>
       <Position24>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="110" Column="1" TopLine="99"/>
+        <Filename Value="..\lgraphics.pas"/>
+        <Caret Line="65" Column="16" TopLine="42"/>
       </Position24>
       <Position25>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="115" Column="47" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="62" Column="1" TopLine="54"/>
       </Position25>
       <Position26>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="26" Column="89" TopLine="75"/>
+        <Caret Line="60" Column="19" TopLine="35"/>
       </Position26>
       <Position27>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="89" Column="1" TopLine="76"/>
+        <Caret Line="58" Column="22" TopLine="38"/>
       </Position27>
       <Position28>
         <Filename Value="..\linifiles.pas"/>
-        <Caret Line="90" Column="1" TopLine="76"/>
+        <Caret Line="56" Column="30" TopLine="43"/>
       </Position28>
       <Position29>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="91" Column="1" TopLine="76"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="64" Column="13" TopLine="58"/>
       </Position29>
       <Position30>
-        <Filename Value="..\linifiles.pas"/>
-        <Caret Line="117" Column="30" TopLine="96"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="53" Column="7" TopLine="45"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

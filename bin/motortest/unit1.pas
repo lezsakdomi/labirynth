@@ -7,13 +7,14 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   LIniFiles, LGraphics, LLevel, LTypes, fphttpclient
-  {$IfDef WINDOWS}, windows{$EndIf}, Unit2, LCLIntf;
+  {$IfDef WINDOWS}, windows, process{$EndIf}, Unit2, LCLIntf, LSize;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
+    settings: TProcess;
     Timer1: TTimer;
     Timer2: TTimer;
     Timer3: TTimer;
@@ -48,21 +49,29 @@ implementation
 procedure TForm1.FormCreate(Sender: TObject);
 var cini: TLIniFile;
     stream: TStringStream;
+    Size: TL2DSize;
 begin
   //stream:=TStringStream.Create;
   //;
   //cini:=TLIniFile.Create(stream);
   ini:=TLIniFile.Create('../../main.ini');
+  Size:=ini.ReadL2DSize('Form', 'size');
+  Width:=Size.Width;
+  Height:=Size.Height;
   Form2:=TForm2.Create(Form1);
   Visualisator:=TVisualisator.Create(Form1, ini.ReadIni('Visualisator', 'ini'));
   levelsini:=ini.ReadIni('Form', 'levelsini');
   levels:=ReadLevelArray('levels', levelsini);
   //Visualisator.Level:=levels[0];
+  settings.CommandLine:=
+    ini.ReadString('Form', 'settings_command', '../settings/project1.exe')+
+    ' --ini='+ini.FileName;
   Color:=clGreen;
   Repaint;
-  Timer2.Enabled:=ini.ReadBool('Form', 'timer', Timer2.Enabled);
   Timer2.Interval:=ini.ReadInteger('Form', 'timerinterval', Timer2.Interval);
+  Timer2.Enabled:=ini.ReadBool('Form', 'timer', Timer2.Enabled);
   Timer3.Interval:=ini.ReadInteger('Form', 'keydetect', Timer3.Interval);
+  Timer3.Enabled:=True;
 end;
 
 procedure TForm1.FormDeactivate(Sender: TObject);
@@ -95,6 +104,20 @@ begin
           end;
     #08:  FormDestroy(Self);                                      //backspace
     #27:  Close;                                                  //ESCape
+    #240: begin                                                   //settings
+            ini.Free;
+            settings.Execute;
+            Timer1.Enabled:=False;
+            Timer2.Enabled:=False;
+            Timer3.Enabled:=False;
+            Visualisator.Picture.Bitmap:=ini.ReadBitmap('Form', 'wait', Visualisator.Picture.Bitmap);
+            while settings.Active do
+            begin
+              //Sleep(1000);
+              Repaint;
+            end;
+            FormCreate(Nil);
+          end;
     else
       begin
         Color:=clYellow;

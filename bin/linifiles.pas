@@ -20,7 +20,7 @@ type
       TLIniFileArray=array of TLIniFile;
   public
     {functions and procedures}
-    constructor Create(const AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
+    constructor Create(AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
     function ReadString(const Section, Ident: String; Default: string=''; UseParent: Boolean=True): string;
     procedure ParseFn(var AFn: TLFn);
     function ReadFn(const Section, Ident: String; Default: TLFn=''; UseParent: Boolean=True): TLFn;
@@ -53,8 +53,9 @@ type
 
 implementation
 
-constructor TLIniFile.Create(const AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
+constructor TLIniFile.Create(AFileName: string; AEscapeLineFeeds: Boolean=False; AParent: {$IfDef PARENT_AS_L}TLIniFile{$Else}TCustomIniFile{$EndIf}=Nil);
 begin
+  ParseFn(AFileName);
   inherited Create(AFileName, AEscapeLineFeeds);
   FParent:=AParent;
 end;

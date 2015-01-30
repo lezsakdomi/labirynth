@@ -26,6 +26,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
+        <CommandLineParams Value="--ini ../../main.ini"/>
       </local>
     </RunParams>
     <RequiredPackages Count="1">

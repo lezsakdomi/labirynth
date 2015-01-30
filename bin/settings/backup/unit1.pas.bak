@@ -54,7 +54,11 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  MainIni:=TLIniFile.Create('../../main.ini');
+  if Application.HasOption('f', 'ini') then
+    iniFn:=Application.GetOptionValue('f', 'ini')
+  else
+    iniFn:='../../main.ini';
+  ShowMessage(iniFn);
   Update;
 end;
 
@@ -64,6 +68,7 @@ begin
   Color:=clWhite;
   Repaint;
 
+  MainIni:=TLIniFile.Create(iniFn);
   VisualisatorIni:=MainIni.ReadIni('Visualisator');
   musicToggle.Checked:=MainIni.ReadFn('Form', 'music')<>'';
   music.Text:=MainIni.ReadFn('Form', 'music');
