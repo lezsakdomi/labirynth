@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient
+  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize
   {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type

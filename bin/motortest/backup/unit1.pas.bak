@@ -7,11 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   LIniFiles, LGraphics, LLevel, LTypes, fphttpclient
-<<<<<<< HEAD
-  {$IfDef WINDOWS}, windows, process{$EndIf}, Unit2, LCLIntf, LSize;
-=======
-  {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, Unit2, LCLIntf;
->>>>>>> c6036de094f41c915835bf983ed8c320389716cd
+  {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type
 
@@ -55,12 +51,13 @@ var cini: TLIniFile;
     stream: TStringStream;
     Size: TL2DSize;
 begin
-  Width:=Size.Width;
-  Height:=Size.Height;
   //stream:=TStringStream.Create;
   //;
   //cini:=TLIniFile.Create(stream);
   ini:=TLIniFile.Create('../../main.ini');
+  Size:=ini.ReadL2DSize('Form', 'size');
+  Width:=Size.Width;
+  Height:=Size.Height;
   Form2:=TForm2.Create(Form1);
   Visualisator:=TVisualisator.Create(Form1, ini.ReadIni('Visualisator', 'ini'));
   levelsini:=ini.ReadIni('Form', 'levelsini');
@@ -74,11 +71,8 @@ begin
   Timer2.Interval:=ini.ReadInteger('Form', 'timerinterval', Timer2.Interval);
   Timer2.Enabled:=ini.ReadBool('Form', 'timer', Timer2.Enabled);
   Timer3.Interval:=ini.ReadInteger('Form', 'keydetect', Timer3.Interval);
-<<<<<<< HEAD
   Timer3.Enabled:=True;
-=======
-  sndPlaySound(ini.ReadFn('Form', 'music', ''), SND_ASYNC or SND_LOOP);
->>>>>>> c6036de094f41c915835bf983ed8c320389716cd
+  sndPlaySound(PChar(ini.ReadFn('Form', 'music', '')), SND_ASYNC or SND_LOOP);
 end;
 
 procedure TForm1.FormDeactivate(Sender: TObject);
