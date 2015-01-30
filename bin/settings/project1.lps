@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="24">
+    <Units Count="25">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -18,10 +18,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="52"/>
-        <CursorPos X="11" Y="64"/>
+        <TopLine Value="46"/>
+        <CursorPos X="36" Y="70"/>
         <UsageCount Value="26"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -30,7 +31,7 @@
         <Filename Value="..\linifiles.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LIniFiles"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="134"/>
         <CursorPos X="1" Y="151"/>
@@ -41,7 +42,7 @@
         <Filename Value="..\lposition.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LPosition"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="9"/>
         <WindowIndex Value="0"/>
         <TopLine Value="185"/>
         <CursorPos X="6" Y="192"/>
@@ -63,7 +64,7 @@
         <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="IniFiles"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="473"/>
         <CursorPos X="1" Y="493"/>
@@ -74,7 +75,7 @@
         <Filename Value="..\lgraphics.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LGraphics"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="43"/>
         <CursorPos X="30" Y="57"/>
@@ -85,7 +86,7 @@
         <Filename Value="..\llevel.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LLevel"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
@@ -96,7 +97,7 @@
         <Filename Value="..\lmap.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LMap"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
@@ -107,7 +108,7 @@
         <Filename Value="..\lpixel.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LPixel"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
@@ -118,7 +119,7 @@
         <Filename Value="..\lpixelstorage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LPixelStorage"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="7"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
@@ -129,7 +130,7 @@
         <Filename Value="..\lpoint.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LPoint"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="8"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
@@ -140,7 +141,7 @@
         <Filename Value="..\lsize.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LSize"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="10"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
@@ -151,7 +152,7 @@
         <Filename Value="..\ltexture.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LTexture"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="11"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
@@ -162,7 +163,7 @@
         <Filename Value="..\ltypes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LTypes"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="12"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
@@ -229,19 +230,24 @@
       </Unit22>
       <Unit23>
         <Filename Value="C:\lazarus\lcl\include\buttoncontrol.inc"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="33"/>
+        <TopLine Value="1"/>
         <CursorPos X="1" Y="48"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit23>
+      <Unit24>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="54"/>
+        <CursorPos X="14" Y="64"/>
+        <UsageCount Value="10"/>
+      </Unit24>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
-    <JumpHistory Count="26" HistoryIndex="25">
+    <JumpHistory Count="27" HistoryIndex="26">
       <Position1>
         <Filename Value="unit1.pas"/>
         <Caret Line="70" Column="1" TopLine="46"/>
@@ -346,6 +352,10 @@
         <Filename Value="unit1.pas"/>
         <Caret Line="64" Column="11" TopLine="52"/>
       </Position26>
+      <Position27>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="58" Column="34" TopLine="34"/>
+      </Position27>
     </JumpHistory>
   </ProjectSession>
   <EditorMacros Count="0"/>

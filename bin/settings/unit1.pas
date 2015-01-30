@@ -44,6 +44,7 @@ type
 var
   Form1: TForm1;
   MainIni, VisualisatorIni: TLIniFile;
+  iniFn: TFilename;
 
 implementation
 
@@ -53,7 +54,10 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  MainIni:=TLIniFile.Create('../../main.ini');
+  if Application.HasOption('f', 'ini') then
+    iniFn:=Application.GetOptionValue('f', 'ini')
+  else
+    iniFn:='../../main.ini';
   Update;
 end;
 
@@ -63,6 +67,7 @@ begin
   Color:=clWhite;
   Repaint;
 
+  MainIni:=TLIniFile.Create(iniFn);
   VisualisatorIni:=MainIni.ReadIni('Visualisator');
   musicToggle.Checked:=MainIni.ReadFn('Form', 'music')<>'';
   music.Text:=MainIni.ReadFn('Form', 'music');
