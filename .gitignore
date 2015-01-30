@@ -50,15 +50,15 @@
 *.dsk
 
 # Delphi history and backups
-#__history/
-#*.~*
+__history/
+*.~*
 
 #####################################
 #				Lazarus				#
 #####################################
 
-#*.*~
-#*/backup/*.bak
+*.*~
+*/backup/*.bak
 *.o
 *.or
 *.ppu

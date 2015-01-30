@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   LIniFiles, LGraphics, LLevel, LTypes, fphttpclient
-  {$IfDef WINDOWS}, windows, process{$EndIf}, Unit2, LCLIntf, LSize;
+  {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type
 
@@ -72,6 +72,7 @@ begin
   Timer2.Enabled:=ini.ReadBool('Form', 'timer', Timer2.Enabled);
   Timer3.Interval:=ini.ReadInteger('Form', 'keydetect', Timer3.Interval);
   Timer3.Enabled:=True;
+  sndPlaySound(PChar(ini.ReadFn('Form', 'music', '')), SND_ASYNC or SND_LOOP);
 end;
 
 procedure TForm1.FormDeactivate(Sender: TObject);
