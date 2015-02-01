@@ -107,7 +107,7 @@ procedure TVisualisator.draw;
 { $Define COLORS}
 {$Define FOG}
 { $Define ANIMATE}
-{ $Define DBG}
+{$Define DBG}
 {$Define WALLMOD}
 { $Define MINIMAPANIMATE}
 {$Define MINIMAP}

@@ -5,8 +5,9 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize
+  Classes, SysUtils, FileUtil, UTF8Process, Forms, Controls, Graphics, Dialogs,
+  ExtCtrls, LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize,
+  LPosition
   {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type
@@ -14,7 +15,8 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
-    settings: TProcess;
+    resultp: TProcessUTF8;
+    settings: TProcessUTF8;
     Timer1: TTimer;
     Timer2: TTimer;
     Timer3: TTimer;
@@ -31,6 +33,8 @@ type
     procedure setLevel(i: Integer);
   public
     { public declarations }
+    function move(ADirection: TLDirection=0; ASteps: Integer=1;
+      AUpdate: Boolean=True): TLPlayerPosition;
     function getPos: TL2DPosition;
     procedure setPos(value: TL2DPosition);
     property Pos: TL2DPosition read getPos write setPos;
@@ -45,6 +49,8 @@ var
   levels: TLLevelArray;
   Visualisator: TVisualisator;
   net: TFPHTTPClient;
+  start: TDateTime;
+  steps: Integer;
 
 implementation
 
@@ -70,8 +76,12 @@ begin
   settings.CommandLine:=
     ini.ReadString('Settings', 'executable', '../settings/project1.exe')+
     ' --ini='+ini.FileName;
+  resultp.CommandLine:=
+    ini.ReadString('Result', 'executable', '../result/project1.exe')+
+    ' --ini='+ini.FileName;
   Color:=clGreen;
   Repaint;
+  Timer1.Enabled:=True;
   Timer2.Interval:=ini.ReadInteger('Form', 'timerinterval', Timer2.Interval);
   Timer2.Enabled:=ini.ReadBool('Form', 'timer', Timer2.Enabled);
   Timer3.Interval:=ini.ReadInteger('Form', 'keydetect', Timer3.Interval);
@@ -146,8 +156,35 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-  Color:=clDefault;
-  Enabled:=False;
+  //Color:=clDefault;
+  //Enabled:=False;
+  if Visualisator.Level=Nil then Exit;
+  if Visualisator.Level.getSucessed then
+  begin
+    resultp.Parameters.Add('--start='+FloatToStr(start));
+    resultp.Parameters.Add('--steps='+IntToStr(steps));
+    resultp.Parameters.Add('--action=win');
+    resultp.Execute;
+    Timer1.Enabled:=False;
+    Timer2.Enabled:=False;
+    Timer3.Enabled:=False;
+    Close;
+    Visualisator.Free;
+    Free;
+  end else
+  if Visualisator.Level.Death then
+  begin
+    resultp.Parameters.Add('--start='+FloatToStr(start));
+    resultp.Parameters.Add('--steps='+IntToStr(steps));
+    resultp.Parameters.Add('--action=death');
+    resultp.Execute;
+    Timer1.Enabled:=False;
+    Timer2.Enabled:=False;
+    Timer3.Enabled:=False;
+    Close;
+    Visualisator.Free;
+    Free;
+  end;
 end;
 
 procedure TForm1.Timer2Timer(Sender: TObject);
@@ -172,10 +209,10 @@ if (Visualisator<>Nil) and (Visualisator.Level<>Nil) then
     if GetKeyState(i)<0 then
     begin
       case chr(i) of
-        'W':  Visualisator.Level.{PlayerPosition.}move(0*right_angle, 3);
-        'A':  Visualisator.Level.{PlayerPosition.}move( -right_angle, 3);
-        'S':  Visualisator.Level.{PlayerPosition.}move(2*right_angle, 3);
-        'D':  Visualisator.Level.{PlayerPosition.}move( +right_angle, 3);
+        'W':  move(0*right_angle, 3);
+        'A':  move( -right_angle, 3);
+        'S':  move(2*right_angle, 3);
+        'D':  move( +right_angle, 3);
         {$IfDef WINDOWS}#226{$Else}#16{$EndIf}: Visualisator.Level.PlayerPosition.direction:=Visualisator.Level.PlayerPosition.direction-0.1; //í
         'C':  Visualisator.Level.PlayerPosition.direction:=Visualisator.Level.PlayerPosition.direction+0.1;
         else Caption:='Pressed:'+chr(i)+'['+IntToStr(i)+']';
@@ -197,6 +234,14 @@ begin
   end;
   Visualisator.Level:=levels[i-1];
   Show;
+  start:=Now;
+end;
+
+function TForm1.move(ADirection: TLDirection=0; ASteps: Integer=1;
+  AUpdate: Boolean=True): TLPlayerPosition;
+begin
+  Result:=Visualisator.Level.move(ADirection, ASteps, AUpdate);
+  Inc(steps);
 end;
 
 function TForm1.getPos:TL2DPosition;
