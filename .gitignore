@@ -58,9 +58,5 @@ __history/
 #####################################
 
 *.*~
-*/backup/*.bak
-*.o
-*.or
-*.ppu
-*.compiled
-*.obj
+lib/
+backup/
