@@ -1,0 +1,65 @@
+object Form1: TForm1
+  Left = 238
+  Height = 352
+  Top = 145
+  Width = 464
+  Caption = 'Form1'
+  ClientHeight = 352
+  ClientWidth = 464
+  OnCreate = FormCreate
+  LCLVersion = '1.2.6.0'
+  object Image1: TImage
+    Left = 0
+    Height = 329
+    Top = 0
+    Width = 464
+    Align = alClient
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 329
+    Width = 464
+    Panels = <    
+      item
+        Alignment = taRightJustify
+        Bevel = pbNone
+        Text = 'Időd:'
+        Width = 50
+      end    
+      item
+        Alignment = taCenter
+        Bevel = pbRaised
+        Text = '00:00:00'
+        Width = 50
+      end    
+      item
+        Alignment = taRightJustify
+        Bevel = pbNone
+        Text = 'Lépések száma:'
+        Width = 100
+      end    
+      item
+        Alignment = taCenter
+        Bevel = pbRaised
+        Text = '110'
+        Width = 50
+      end    
+      item
+        Alignment = taRightJustify
+        Bevel = pbNone
+        Text = 'Pont:'
+        Width = 50
+      end    
+      item
+        Alignment = taCenter
+        Text = '1800'
+        Width = 50
+      end    
+      item
+        Text = '9567000'
+        Width = 50
+      end>
+    SimplePanel = False
+  end
+end

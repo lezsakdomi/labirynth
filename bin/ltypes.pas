@@ -20,6 +20,9 @@ type
   function StrToPoint(Value: String): TPoint;
   function PointToStr(Value: TPoint): String;
 
+  function Default(AString, ADefault: String; AEmpty: String=''): String;
+  function Default(AInteger, ADefault: Integer; AEmpty: Integer=-1): Integer;
+
 const
   right_angle=1.57079633333;
 
@@ -68,6 +71,18 @@ begin
   arr:=StrToArray(Value, ';');
   Result.X:=StrToInt(arr[0]);
   Result.Y:=StrToInt(arr[1]);
+end;
+
+function Default(AString, ADefault: String; AEmpty: String=''): String;
+begin
+  Result:=AString;
+  if Result=AEmpty then Result:=ADefault;
+end;
+
+function Default(AInteger, ADefault: Integer; AEmpty: Integer=-1): Integer;
+begin
+  Result:=AInteger;
+  if Result=AEmpty then Result:=ADefault;
 end;
 
 end.
