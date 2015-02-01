@@ -26,6 +26,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
+        <CommandLineParams Value="--time=3600 --steps=110"/>
       </local>
     </RunParams>
     <RequiredPackages Count="1">
@@ -33,7 +34,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="13">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -43,9 +44,65 @@
         <Filename Value="unit1.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\lgraphics.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LGraphics"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\linifiles.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LIniFiles"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\llevel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LLevel"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\lmap.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LMap"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\lpixel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LPixel"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\lpixelstorage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LPixelStorage"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\lpoint.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LPoint"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\lposition.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LPosition"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\lsize.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LSize"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\ltexture.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LTexture"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\ltypes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LTypes"/>
+      </Unit12>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -56,6 +113,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value=".."/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

@@ -5,7 +5,7 @@ unit LTypes;
 interface
 
 uses
-  Classes, SysUtils, Graphics;
+  Classes, SysUtils, Graphics, variants;
 
 type
   TLFn=String;
@@ -21,7 +21,9 @@ type
   function PointToStr(Value: TPoint): String;
 
   function Default(AString, ADefault: String; AEmpty: String=''): String;
-  function Default(AString, ADefault: Integer; AEmpty: Integer=-1): Integer;
+  function Default(AInteger, ADefault: Integer; AEmpty: Integer=0): Integer;
+  function Default(AInteger, ADefault: Extended; AEmpty: Extended=0): Extended;
+  function Default(AValue, ADefault: Variant; AEmpty: Variant=''): variant;
 
 const
   right_angle=1.57079633333;
@@ -73,15 +75,27 @@ begin
   Result.Y:=StrToInt(arr[1]);
 end;
 
-function Default(AString, ADefault: String; AEmpty: String=''): String;
+function Default(AValue, ADefault: String; AEmpty: String=''): String;
 begin
-  Result:=AString;
+  Result:=AValue;
   if Result=AEmpty then Result:=ADefault;
 end;
 
-function Default(AInteger, ADefault: Integer; AEmpty: Integer=-1): Integer;
+function Default(AValue, ADefault: Integer; AEmpty: Integer=0): Integer;
 begin
-  Result:=AInteger;
+  Result:=AValue;
+  if Result=AEmpty then Result:=ADefault;
+end;
+
+function Default(AValue, ADefault: Extended; AEmpty: Extended=0): Extended;
+begin
+  Result:=AValue;
+  if Result=AEmpty then Result:=ADefault;
+end;
+
+function Default(AValue, ADefault: Variant; AEmpty: Variant=''): variant;
+begin
+  Result:=AValue;
   if Result=AEmpty then Result:=ADefault;
 end;
 

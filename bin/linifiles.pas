@@ -89,13 +89,14 @@ begin
 end;
 *)
 begin
-  if ((Parent=Nil) or (not UseParent)) then
-    Result:=Default
-  else
-  begin
-    Result:=Parent.ReadString(Section, Ident, Default);
-  end;
-  Result:=Default(inherited ReadString(Section, Ident, ''), Result);
+  Result:=inherited ReadString(Section, Ident, '');
+  if Result='' then
+    if ((Parent=Nil) or (not UseParent)) then
+      Result:=Default
+    else
+    begin
+      Result:=Parent.ReadString(Section, Ident, Default);
+    end;
 end;
 
 procedure TLIniFile.ParseFn(var AFn: TLFn);
@@ -114,13 +115,14 @@ end;
 
 function TLIniFile.ReadFn(const Section, Ident: String; Default: TLFn; UseParent: Boolean=True):TLFn;
 begin
-  if ((Parent=Nil) or (not UseParent)) then
-    Result:=Default
-  else
-  begin
-    Result:=Parent.ReadFn(Section, Ident, Default);
-  end;
-  Result:=Default(ReadString(Section, Ident, '', False), Result);
+  Result:=ReadString(Section, Ident, '', False);
+  if Result='' then
+    if ((Parent=Nil) or (not UseParent)) then
+      Result:=Default
+    else
+    begin
+      Result:=Parent.ReadFn(Section, Ident, Default);
+    end;
   ParseFn(Result);
 end;
 
