@@ -164,26 +164,28 @@ begin
     resultp.Parameters.Add('--start='+FloatToStr(start));
     resultp.Parameters.Add('--steps='+IntToStr(steps));
     resultp.Parameters.Add('--action=win');
+    ini.Free;
     resultp.Execute;
     Timer1.Enabled:=False;
     Timer2.Enabled:=False;
     Timer3.Enabled:=False;
-    Close;
-    Visualisator.Free;
-    Free;
+    while resultp.Running do
+      Sleep(1);
+    FormCreate(Nil);
   end else
   if Visualisator.Level.Death then
   begin
     resultp.Parameters.Add('--start='+FloatToStr(start));
     resultp.Parameters.Add('--steps='+IntToStr(steps));
     resultp.Parameters.Add('--action=death');
+    ini.Free;
     resultp.Execute;
     Timer1.Enabled:=False;
     Timer2.Enabled:=False;
     Timer3.Enabled:=False;
-    Close;
-    Visualisator.Free;
-    Free;
+    while resultp.Running do
+      Sleep(1);
+    FormCreate(Nil);
   end;
 end;
 

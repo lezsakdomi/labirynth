@@ -168,9 +168,9 @@ begin
     Timer1.Enabled:=False;
     Timer2.Enabled:=False;
     Timer3.Enabled:=False;
-    Close;
-    Visualisator.Free;
-    Free;
+    while resultp.Running do
+      Sleep(1);
+    FormCreate(Nil);
   end else
   if Visualisator.Level.Death then
   begin
@@ -180,10 +180,10 @@ begin
     resultp.Execute;
     Timer1.Enabled:=False;
     Timer2.Enabled:=False;
-    Timer3.Enabled:=False;www
-    Close;
-    Visualisator.Free;
-    Free;
+    Timer3.Enabled:=False;
+    while resultp.Running do
+      Sleep(1);
+    FormCreate(Nil);
   end;
 end;
 
