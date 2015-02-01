@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient
+  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize
   {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type
@@ -31,6 +31,12 @@ type
     procedure setLevel(i: Integer);
   public
     { public declarations }
+    function getPos: TL2DPosition;
+    procedure setPos(value: TL2DPosition);
+    property Pos: TL2DPosition read getPos write setPos;
+    function getSize: TL2DSize;
+    procedure setSize(Value: TL2DSize);
+    property Size: TL2DSize read getSize write setSize;
   end;
 
 var
@@ -49,22 +55,19 @@ implementation
 procedure TForm1.FormCreate(Sender: TObject);
 var cini: TLIniFile;
     stream: TStringStream;
-    Size: TL2DSize;
 begin
   //stream:=TStringStream.Create;
   //;
   //cini:=TLIniFile.Create(stream);
   ini:=TLIniFile.Create('../../main.ini');
   Size:=ini.ReadL2DSize('Form', 'size');
-  Width:=Size.Width;
-  Height:=Size.Height;
   Form2:=TForm2.Create(Form1);
   Visualisator:=TVisualisator.Create(Form1, ini.ReadIni('Visualisator', 'ini'));
   levelsini:=ini.ReadIni('Form', 'levelsini');
   levels:=ReadLevelArray('levels', levelsini);
   //Visualisator.Level:=levels[0];
   settings.CommandLine:=
-    ini.ReadString('Form', 'settings_command', '../settings/project1.exe')+
+    ini.ReadString('Settings', 'executable', '../settings/project1.exe')+
     ' --ini='+ini.FileName;
   Color:=clGreen;
   Repaint;
@@ -193,6 +196,28 @@ begin
   end;
   Visualisator.Level:=levels[i-1];
   Show;
+end;
+
+function TForm1.getPos:TL2DPosition;
+begin
+  Result:=TL2DPosition.Create(Left, Top);
+end;
+
+procedure TForm1.setPos(Value: TL2DPosition);
+begin
+  Left:=Value.X;
+  Top:=Value.Y;
+end;
+
+function TForm1.getSize: TL2DSize;
+begin
+  Result:=TL2DSize.Create(Width, Height);
+end;
+
+procedure TForm1.setSize(Value: TL2DSize);
+begin
+  Width:=Value.x;
+  Height:=Value.y;
 end;
 
 end.
