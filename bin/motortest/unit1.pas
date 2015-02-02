@@ -15,8 +15,8 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
-    resultp: TProcessUTF8;
-    settings: TProcessUTF8;
+    resultp: TProcess;
+    settings: TProcess;
     Timer1: TTimer;
     Timer2: TTimer;
     Timer3: TTimer;
@@ -50,6 +50,7 @@ var
   Visualisator: TVisualisator;
   net: TFPHTTPClient;
   start: TDateTime;
+  ido: Integer;
   steps: Integer;
 
 implementation
@@ -73,12 +74,12 @@ begin
   levelsini:=ini.ReadIni('Form', 'levelsini');
   levels:=ReadLevelArray('levels', levelsini);
   //Visualisator.Level:=levels[0];
-  settings.CommandLine:=
-    ini.ReadString('Settings', 'executable', '../settings/project1.exe')+
-    ' --ini='+ini.FileName;
-  resultp.CommandLine:=
-    ini.ReadString('Result', 'executable', '../result/project1.exe')+
-    ' --ini='+ini.FileName;
+  settings.Executable:=
+    ini.ReadString('Settings', 'executable', '../settings/project1.exe');
+  settings.Parameters.Add('--ini='+ini.FileName);
+  resultp.Executable:=
+    ini.ReadString('Result', 'executable', '../result/project1.exe');
+  resultp.Parameters.Add('--ini='+ini.FileName);
   Color:=clGreen;
   Repaint;
   Timer1.Enabled:=True;
@@ -156,20 +157,24 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
+  if Visualisator.Level<>Nil then Inc(ido);
   //Color:=clDefault;
   //Enabled:=False;
   if Visualisator.Level=Nil then Exit;
   if Visualisator.Level.getSucessed then
   begin
-    resultp.Parameters.Add('--start='+FloatToStr(start));
+    resultp.Parameters.Add('--time='+IntToStr(ido));
+    //resultp.Parameters.Add('--start='+FloatToStr(start));
     resultp.Parameters.Add('--steps='+IntToStr(steps));
     resultp.Parameters.Add('--action=win');
     ini.Free;
-    ShowMessage(IntToStr(steps));
+    //ShowMessage(resultp.Parameters.Text);
+    //ShowMessage(IntToStr(steps)+#10#13+FloatToStr(start)+#10#13+FloatToStr(Now));
     resultp.Execute;
     Timer1.Enabled:=False;
     Timer2.Enabled:=False;
     Timer3.Enabled:=False;
+    //ShowMessage('Executed...');
     while resultp.Running do
       Sleep(1);
     FormCreate(Nil);
@@ -238,6 +243,7 @@ begin
   Visualisator.Level:=levels[i-1];
   Show;
   start:=Now;
+  ido:=0;
 end;
 
 function TForm1.move(ADirection: TLDirection=0; ASteps: Integer=1;
