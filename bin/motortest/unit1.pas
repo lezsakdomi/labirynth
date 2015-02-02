@@ -165,6 +165,7 @@ begin
     resultp.Parameters.Add('--steps='+IntToStr(steps));
     resultp.Parameters.Add('--action=win');
     ini.Free;
+    ShowMessage(IntToStr(steps));
     resultp.Execute;
     Timer1.Enabled:=False;
     Timer2.Enabled:=False;
