@@ -18,12 +18,17 @@
 				go('index.htm');
 			}
 		)
-		function go(url){
+		$(window).bind('popstate', function(event){
+			console.log(event);
+			go(event.originalEvent.state.url, event.type/*, event.originalEvent*/);
+		});
+		function go(url, initator, event){
 			//$('#loading').show();
 			$('#content').fadeTo(10, 0.7);
 			$('#content').load(url);
 			$('#content').fadeTo(10, 1)
 			//$('#loading').hide();
+			history.pushState({url:url, initator:initator, event:event}, undefined, "#"+url);
 		}
 	</script>
   </head>
