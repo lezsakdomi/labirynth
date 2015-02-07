@@ -5,7 +5,7 @@ unit LTypes;
 interface
 
 uses
-  Classes, SysUtils, Graphics, variants;
+  Classes, SysUtils, Graphics, variants, FileUtil;
 
 type
   TLFn=String;
@@ -24,6 +24,9 @@ type
   function Default(AValue, ADefault: Integer; AEmpty: Integer=0): Integer;
   function Default(AValue, ADefault: Extended; AEmpty: Extended=0): Extended;
   function Default(AValue, ADefault: Variant; AEmpty: Variant=''): variant;
+
+  procedure ParseFn(var AFn: TLFn);
+  function RParseFn(const AFn: TLFn): TLFn;
 
 const
   right_angle=1.57079633333;
@@ -97,6 +100,26 @@ function Default(AValue, ADefault: Variant; AEmpty: Variant=''): variant;
 begin
   Result:=AValue;
   if Result=AEmpty then Result:=ADefault;
+end;
+
+procedure ParseFn(var AFn: TLFn);
+var appname, appdir, inipath, inidir: TLFn;
+begin
+  (*
+  appname:=ApplicationName;
+  appdir:=ExtractFileDir(appdir);
+  inipath:=CreateAbsolutePath(FileName, appdir);
+  *)
+  inipath:=ExpandFileName(ApplicationName);
+  inidir:=ExtractFileDir(inipath);
+  AFn:=CreateAbsolutePath(AFn, inidir);
+  AFn:=UTF8ToSys(AFn);
+end;
+
+function RParseFn(const AFn: TLFn): TLFn;
+begin
+  Result:=AFn;
+  ParseFn(Result);
 end;
 
 end.
