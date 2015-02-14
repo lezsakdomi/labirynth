@@ -60,7 +60,8 @@ begin
   //;
   //cini:=TLIniFile.Create(stream);
   ini:=TLIniFile.Create('../../main.ini');
-  Size:=ini.ReadL2DSize('Form', 'size');
+  Size:=ini.ReadL2DSize('Form', 'size', Size);
+  Pos:=ini.ReadL2DPosition('Form', 'pos', Pos);
   Form2:=TForm2.Create(Form1);
   Visualisator:=TVisualisator.Create(Form1, ini.ReadIni('Visualisator', 'ini'));
   levelsini:=ini.ReadIni('Form', 'levelsini');
@@ -122,6 +123,7 @@ begin
             end;
             FormCreate(Nil);
           end;
+    'i': Visualisator.initDraw;
     else
       begin
         Color:=clYellow;

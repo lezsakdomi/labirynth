@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize
+  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize, LPosition
   {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type
@@ -123,6 +123,7 @@ begin
             end;
             FormCreate(Nil);
           end;
+    'i': Visualisator.initDraw;
     else
       begin
         Color:=clYellow;

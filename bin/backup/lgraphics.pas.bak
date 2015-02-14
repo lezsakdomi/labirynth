@@ -2,6 +2,21 @@ unit LGraphics;
 
 {$mode objfpc}{$H+}{$Define LGRAPHICS}
 
+{$Define BITMAP}
+{$Define DRAWCORNER}
+{ $Define RANDOM}
+{ $Define LINES}
+{ $Define EDGES}
+{ $Define ANIMATE}//Does'nt matter
+{ $Define COLORS}
+{$Define FOG}
+{ $Define ANIMATE}
+{ $Define DBG}
+{$Define WALLMOD}
+{ $Define MINIMAPANIMATE}
+{$Define MINIMAP}
+{$Define FLOORDEC}
+
 interface
 
 uses
@@ -13,12 +28,44 @@ type
   TVisualisator=class(TImage)
   private
     {types and vars}
+    type
+      TDpiRec=record
+        doIt: Boolean;
+        x, y: Integer;
+        cl: TColor;
+      end;
+
+      TSave=record
+        y: array of record
+          x: array of record
+            fullPosition: TLPlayerPosition;
+            main: record
+              i: array of record
+                j: array of record
+                  dump: TDpiRec;
+                end;
+              end;
+            end;
+            corner: record
+              p, m: TDpiRec; //plus, minus
+            end;
+            FloorDec: record
+              p, m: TDpiRec;
+              j: array of record
+                dump: TDpiRec;
+              end;
+            end;
+          end;
+        end;
+      end;
+
     var
       //FScreen: TCanvas;
       FLevel: TLLevel;
       FDbg, FAnimate, FDrawcorner: Boolean;
       Fini: TLIniFile;
       FMinimap: TCustomControl;
+      FSave: TSave;
     const
       iniSection='Visualisator';
   public
@@ -27,10 +74,12 @@ type
     //procedure drawAll();
     procedure drawpixel(AColor: TColor; ARel: TL3DPosition);
     procedure draw;
+    procedure initDraw;
     destructor Destroy; override;
   private
     {propertyes}
     property ini: TLIniFile read Fini write Fini;
+    property Save: TSave read FSave;
   public
     {propertyes}
     procedure setLevel(Value: TLLevel);
@@ -62,7 +111,7 @@ begin
   FScreen.Height:=FMap.data.Height;
   }
   Parent:=AOwner;
-  Stretch:=ini.ReadBool(iniSection, 'sctreech', True);
+  Stretch:=ini.ReadBool(iniSection, 'sctretch', True);
   Picture.Bitmap:=ini.ReadBitmap(iniSection, 'splash', Picture.Bitmap);
   //Picture.Bitmap.LoadFromFile('C:\Users\lezsakd12a\Desktop\Labirynth\source\motortest\splash.bmp');
   dbg:=ini.ReadBool(iniSection, 'dbg', false);
@@ -97,22 +146,196 @@ begin
   end;
 end;
 
-procedure TVisualisator.draw;
-{$Define BITMAP}
-{$Define DRAWCORNER}
-{ $Define RANDOM}
-{ $Define LINES}
-{ $Define EDGES}
-{ $Define ANIMATE}//Does'nt matter
-{ $Define COLORS}
-{$Define FOG}
-{ $Define ANIMATE}
-{ $Define DBG}
-{$Define WALLMOD}
-{ $Define MINIMAPANIMATE}
-{$Define MINIMAP}
-{$Define FLOORDEC}
+procedure TVisualisator.initDraw;
+{$IfDef COLORS}
+  {$IfDef FOG}
+    {$UnDef FOG}
+  {$Else}
+    {$Define HOMOGEN}
+  {$EndIf}
+{$EndIf}
+{$UnDef BITMAP}
+//(*
+var cw, ch: Integer; //canvas
+    cXmax, cYmax: Integer;
+    mmcw, mmch, mmx, mmy, mmi, mmj: Integer; //Minimap
+    dpiX: Integer;         //DrawPixelI()
+    dpiR, dpiG, dpiB: Byte;
+    dpiCl: TColor;
+    wasWall: Boolean;
+    wallCnt: Word;
+    X, Xmax, Y, Ymax, imax, jmax:Integer;
+    dir: Extended;
+    fullPosition: TLPlayerPosition;
+    mX, mY, i, j: Integer;
+    index: record
+      y, x, i, j: Integer;
+    end;
 
+  procedure drawPixelI(
+    var dump: TDpiRec;
+    i, j: Integer;
+    cl: TColor
+  );
+  begin
+    if cl<>clWhite then
+    begin
+      {$IfDef LINES}
+      if ((imax+i)<>0) and (((imax+i) mod round(max(1, ((imax+imax)/5))))=0) then
+        cl:=clYellow;
+      {$EndIf}
+      {$IfDef RANDOM}
+      if (Random(round(imax/5))=1) then
+        cl:=clBlack;
+      {$EndIf}
+      dump.cl:=cl;
+      dump.x:=dpiX+j;
+      dump.y:=cYmax+i;
+      if dbg then
+        Canvas.Pixels[
+          dump.x,
+          dump.y
+        ]:=dump.cl
+      else if Animate then
+        Canvas.Pixels[
+          dump.x,
+          dump.y
+        ]:=RGBToColor(Random(256), Random(256), Random(256));
+    end else dump.doIt:=False;
+  end;
+
+begin
+  begin
+    {$IfDef HOMOGEN}dpiCl:=clGreen;{$EndIf}
+    cw:={$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Width;
+    ch:={$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Height;
+    cXmax:=round(cw/2);
+    cYmax:=round(ch/2);
+    {$IfDef ANIMATE}if not (dbg or animate) then Visible:=False;{$EndIf}
+    {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Clear;
+    {$IfDef BITMAP}Picture.Bitmap.BeginUpdate(True);{$EndIf}
+    Ymax:=Level.ViewSize.y;
+    SetLength(FSave.y, Ymax+1);
+    for mY:=-(Ymax) to 0 do
+    begin
+      Y:=-mY;
+      index.y:=-Ymax;
+      {$IfDef COLORS}
+      dpiR:=round(255*(Y*Y)/(Level.ViewSize.y*Level.ViewSize.y));
+      dpiB:=round(255*Y/Level.ViewSize.y/2);
+      {$EndIf}
+      {$IfDef FOG}
+         dpiCl:=RGBToColor(
+           round(255*(Y/Ymax)),
+           round(255*(Y/Ymax)),
+           round(255*(Y/Ymax))
+         );
+      {$EndIf}
+      //mmj:=abs(round(mmch/Ymax/2));
+      if y<>0 then mmy:=mmch-2*round(mmch/(Ymax/Y));
+      imax:=round((*Ymax-*)(ch/2)*(Y/Ymax));
+      //imax:=abs(imax);
+      imax:=round(ch/2-imax);
+      imax:=Max(imax, 1);
+      Xmax:=round(Level.ViewSize.x/2);
+      Xmax:=round(Xmax*(Y)/Ymax);
+
+      //wasWall:=False;
+      SetLength(FSave.y[index.y].x, Xmax*2+1);
+      for mX:=-(Xmax) to (Xmax) do
+      begin
+        X:=-mX;
+        index.x:=mX+Xmax;
+        {$IfDef WINDOWS}
+          if xmax=0 then xmax:=1;
+        {$EndIf}
+        {$IfNDef WINDOWS}
+          if animate then Sleep(1);
+        {$EndIf}
+        {$IfDef ANIMATE}if dbg or Animate then Application.ProcessMessages;{$EndIf}
+        dir:=Level.PlayerPosition.direction;
+        fullPosition:=TLPlayerPosition.Create;
+        fullPosition.X:=Level.PlayerPosition.coords.X+round(sin(dir)*Y+cos(dir)*X);
+        fullPosition.Y:=Level.PlayerPosition.coords.Y-round(cos(dir)*Y-sin(dir)*X);
+        fullPosition.direction:=Level.PlayerPosition.direction+0;
+        FSave.y[index.y].x[index.x].fullPosition:=fullPosition;
+        {$IfDef DBG}if dbg then
+          {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clGreen;{$EndIf}
+        dpiX:=round(cXmax+cXmax*X/Xmax);
+        jmax:=round(cw/Xmax/2);
+        (*
+        if Level.isWall[fullPosition] then
+        begin*)
+          { TODO -cBug : Compatibility for $EDGES }
+          SetLength(FSave.y[index.y].x[index.x].main.i, 2*imax+1);
+          {$IfDef DBG}
+          if dbg then
+            {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clRed;
+          {$EndIf}
+          for i:=-(imax) to (imax) do
+          begin
+            index.i:=i+imax;
+            SetLength(FSave.y[index.y].x[index.x].main.i[index.i].j, 2*jmax+1);
+            {$IfDef COLORS}
+              dpiG:=round(255*abs(imax+i)/max(1, abs(imax+imax)));
+              dpiCl:=RGBToColor(dpiR, dpiG, dpiB);
+            {$EndIf}
+            for j:=-(jmax) to (jmax) do
+            begin
+              index.j:=j+jmax;
+              drawPixelI(FSave.y[index.y].x[index.x].main.i[index.i].j[index.j].dump, i, j, dpiCl);
+            end;
+            (*if i=0 then
+            begin*)
+              {$IfDef DRAWCORNER}
+              (*if (*not animate and*) DrawCorner then
+              begin*)
+                drawPixelI(FSave.y[index.y].x[index.x].corner.m, (-imax), j, clBlack);
+                drawPixelI(FSave.y[index.y].x[index.x].corner.p, (+imax), j, clBlack);
+              (*end;*)
+              {$EndIf}
+            end;
+            (*end;*)
+          end;
+          (*
+          if wallCnt=1 then
+          begin
+            for i:=-round(imax) to round(imax) do
+            begin
+              if (round(Xmax)<>0) and ((cw mod round(Xmax))>(jmax*2)) then
+                drawPixelI(i, round(+jmax), clBlack)
+              else
+                drawPixelI(i, round(-jmax), clBlack);
+            end;
+          end;
+          *)
+        (*
+        end else if not Level.isPlayerPosition(fullPosition) then
+        begin
+          {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, clWhite);{$EndIf}
+        end;
+        *)
+        {$IfDef FLOORDEC}
+          drawPixelI(FSave.y[index.y].x[index.x].FloorDec.p, +imax, j, Level.Floor[fullPosition]);
+          drawPixelI(FSave.y[index.y].x[index.x].FloorDec.m, -imax, j, Level.Sky[fullPosition]);
+          SetLength(FSave.y[index.y].x[index.x].FloorDec.j, jmax*2+1);
+          for j:=(-jmax) to (+jmax) do
+          begin
+            index.j:=j+jmax;
+            (*if Level.FloorDec[fullPosition] then
+            begin*)
+              drawPixelI(FSave.y[index.y].x[index.x].FloorDec.j[index.j], imax, j, $00FF00);
+              //{$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, $00FF00);{$EndIf}
+            (*end;*)
+          end;
+        {$EndIf}
+      end;
+    end;
+    {$IfNDef ANIMATE}Visible:=True;{$EndIf}
+    //if animate then Animate:=False;
+end;
+
+procedure TVisualisator.draw;
 {$IfNDef MINIMAP}
   {$UnDef MINIMAPANIMATE}
 {$EndIf}
