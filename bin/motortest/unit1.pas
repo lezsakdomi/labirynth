@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize
+  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize, LPosition
   {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type
@@ -45,6 +45,7 @@ var
   levels: TLLevelArray;
   Visualisator: TVisualisator;
   net: TFPHTTPClient;
+  paly: String;
 
 implementation
 
@@ -77,6 +78,7 @@ begin
   Timer3.Interval:=ini.ReadInteger('Form', 'keydetect', Timer3.Interval);
   Timer3.Enabled:=True;
   sndPlaySound(PChar(ini.ReadFn('Form', 'music', '')), SND_ASYNC or SND_LOOP);
+  paly:='';
 end;
 
 procedure TForm1.FormDeactivate(Sender: TObject);
@@ -186,7 +188,11 @@ end;
 
 procedure TForm1.setLevel(i: Integer);
 begin
-  if levels[i-1].hasMinimap then
+paly:=paly+IntToStr(i);
+if Length(paly)=2 then
+begin
+  ShowMessage(paly);
+  if levels[StrToInt(paly)].hasMinimap then
   begin
     Form2.Show;
     Visualisator.Minimap:=Form2;
@@ -195,8 +201,9 @@ begin
     Form2.Hide;
     Visualisator.Minimap:=Nil;
   end;
-  Visualisator.Level:=levels[i-1];
+  Visualisator.Level:=levels[StrToInt(paly)];
   Show;
+end;
 end;
 
 function TForm1.getPos:TL2DPosition;
@@ -222,4 +229,3 @@ begin
 end;
 
 end.
-
