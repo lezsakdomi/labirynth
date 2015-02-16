@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize
+  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize, LPosition
   {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type
@@ -45,6 +45,7 @@ var
   levels: TLLevelArray;
   Visualisator: TVisualisator;
   net: TFPHTTPClient;
+  paly: String;
 
 implementation
 
@@ -187,17 +188,27 @@ end;
 
 procedure TForm1.setLevel(i: Integer);
 begin
-  if levels[i-1].hasMinimap then
-  begin
-    Form2.Show;
-    Visualisator.Minimap:=Form2;
-  end else
-  begin
-    Form2.Hide;
-    Visualisator.Minimap:=Nil;
+  paly:=paly+IntToStr(i);
+  if Length(paly)=2 then
+  begin;
+    i:=StrToInt(paly)-1;
+    if i>=Length(levels) then
+    begin
+      raise Exception.Create('Nincs ennyi szint! (max: '+IntToStr(Length(levels))+')');
+    end;
+    i:=StrToInt(paly);
+    if levels[i].hasMinimap then
+    begin
+      Form2.Show;
+      Visualisator.Minimap:=Form2;
+    end else
+    begin
+      Form2.Hide;
+      Visualisator.Minimap:=Nil;
+    end;
+    Visualisator.Level:=levels[i];
+    Show;
   end;
-  Visualisator.Level:=levels[i-1];
-  Show;
 end;
 
 function TForm1.getPos:TL2DPosition;

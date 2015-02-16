@@ -2,7 +2,7 @@ unit LGraphics;
 
 {$mode objfpc}{$H+}{$Define LGRAPHICS}
 
-{$Define BITMAP}
+{ $Define BITMAP}
 {$Define DRAWCORNER}
 { $Define RANDOM}
 { $Define LINES}
@@ -11,7 +11,7 @@ unit LGraphics;
 { $Define COLORS}
 {$Define FOG}
 { $Define ANIMATE}
-{ $Define DBG}
+{$Define DBG}
 {$Define WALLMOD}
 { $Define MINIMAPANIMATE}
 {$Define MINIMAP}

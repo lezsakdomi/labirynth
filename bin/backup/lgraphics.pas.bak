@@ -2,7 +2,7 @@ unit LGraphics;
 
 {$mode objfpc}{$H+}{$Define LGRAPHICS}
 
-{$Define BITMAP}
+{ $Define BITMAP}
 {$Define DRAWCORNER}
 { $Define RANDOM}
 { $Define LINES}
@@ -11,7 +11,7 @@ unit LGraphics;
 { $Define COLORS}
 {$Define FOG}
 { $Define ANIMATE}
-{ $Define DBG}
+{$Define DBG}
 {$Define WALLMOD}
 { $Define MINIMAPANIMATE}
 {$Define MINIMAP}
@@ -35,6 +35,27 @@ type
         cl: TColor;
       end;
 
+      TSave=array of record
+        fullPosition: TLPlayerPosition;
+        main: record
+          i: array of record
+            j: array of record
+              dump: TDpiRec;
+            end;
+          end;
+        end;
+        corner: record
+          p, m: TDpiRec; //plus, minus
+        end;
+        FloorDec: record
+          p, m: TDpiRec;
+          j: array of record
+            dump: TDpiRec;
+          end;
+        end;
+      end;
+
+      (*
       TSave=record
         y: array of record
           x: array of record
@@ -58,6 +79,7 @@ type
           end;
         end;
       end;
+      *)
 
     var
       //FScreen: TCanvas;
@@ -215,7 +237,6 @@ begin
     {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Clear;
     {$IfDef BITMAP}Picture.Bitmap.BeginUpdate(True);{$EndIf}
     Ymax:=Level.ViewSize.y;
-    SetLength(FSave.y, Ymax+1);
     for mY:=-(Ymax) to 0 do
     begin
       Y:=-mY;
@@ -241,7 +262,6 @@ begin
       Xmax:=round(Xmax*(Y)/Ymax);
 
       //wasWall:=False;
-      SetLength(FSave.y[index.y].x, Xmax*2+1);
       for mX:=-(Xmax) to (Xmax) do
       begin
         X:=-mX;
@@ -296,6 +316,7 @@ begin
               {$EndIf}
             end;
             (*end;*)
+            AppendStr(FSave, cSave);
           end;
           (*
           if wallCnt=1 then
@@ -324,7 +345,7 @@ begin
             index.j:=j+jmax;
             (*if Level.FloorDec[fullPosition] then
             begin*)
-              drawPixelI(FSave.y[index.y].x[index.x].FloorDec.j[index.j], imax, j, $00FF00);
+              drawPixelI(FSave.y[index.y].x[index.x].FloorDec.j[index.j].dump, imax, j, $00FF00);
               //{$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, $00FF00);{$EndIf}
             (*end;*)
           end;
