@@ -20,9 +20,9 @@ type
   function StrToPoint(Value: String): TPoint;
   function PointToStr(Value: TPoint): String;
 
-  function Default(AString, ADefault: String; AEmpty: String=''): String;
-  function Default(AInteger, ADefault: Integer; AEmpty: Integer=0): Integer;
-  function Default(AInteger, ADefault: Extended; AEmpty: Extended=0): Extended;
+  function Default(AValue, ADefault: String; AEmpty: String=''): String;
+  function Default(AValue, ADefault: Integer; AEmpty: Integer=0): Integer;
+  function Default(AValue, ADefault: Extended; AEmpty: Extended=0): Extended;
   function Default(AValue, ADefault: Variant; AEmpty: Variant=''): variant;
 
 const

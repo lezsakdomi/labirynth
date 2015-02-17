@@ -35,29 +35,27 @@ type
         cl: TColor;
       end;
 
-      TSave=record
-        y: array of record
-          x: array of record
-            fullPosition: TLPlayerPosition;
-            main: record
-              i: array of record
-                j: array of record
-                  dump: TDpiRec;
-                end;
-              end;
-            end;
-            corner: record
-              p, m: TDpiRec; //plus, minus
-            end;
-            FloorDec: record
-              p, m: TDpiRec;
-              j: array of record
-                dump: TDpiRec;
-              end;
+      TSaveRec=record
+        fullPosition: TLPlayerPosition;
+        main: record
+          i: array of record
+            j: array of record
+              dump: TDpiRec;
             end;
           end;
         end;
+        corner: record
+          p, m: TDpiRec; //plus, minus
+        end;
+        FloorDec: record
+          p, m: TDpiRec;
+          j: array of record
+            dump: TDpiRec;
+          end;
+        end;
       end;
+
+      TSave=array of TSaveRec;
 
     var
       //FScreen: TCanvas;
@@ -68,6 +66,9 @@ type
       FSave: TSave;
     const
       iniSection='Visualisator';
+  private
+    {functions and procedures}
+    procedure Append(var Value: TSave; const NewVariable: TSaveRec);
   public
     {functions and procedures}
     constructor Create(AOwner: TForm; Aini: TLIniFile);
@@ -117,6 +118,12 @@ begin
   dbg:=ini.ReadBool(iniSection, 'dbg', false);
   Animate:=ini.ReadBool(iniSection, 'animate', false);
   DrawCorner:=ini.ReadBool(iniSection, 'drawcorner', true);
+end;
+
+procedure TVisualisator.Append(var Value: TSave; const NewVariable: TSaveRec);
+begin
+  SetLength(Value, Length(Value)+1);
+  Value[Length(Value)-1]:=NewVariable;
 end;
 
 procedure TVisualisator.drawpixel(AColor: TColor; ARel: TL3DPosition);
@@ -171,6 +178,7 @@ var cw, ch: Integer; //canvas
     index: record
       y, x, i, j: Integer;
     end;
+    SaveRec:TSaveRec;
 
   procedure drawPixelI(
     var dump: TDpiRec;
@@ -215,7 +223,6 @@ begin
     {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Clear;
     {$IfDef BITMAP}Picture.Bitmap.BeginUpdate(True);{$EndIf}
     Ymax:=Level.ViewSize.y;
-    SetLength(FSave.y, Ymax+1);
     for mY:=-(Ymax) to 0 do
     begin
       Y:=-mY;
@@ -241,7 +248,6 @@ begin
       Xmax:=round(Xmax*(Y)/Ymax);
 
       //wasWall:=False;
-      SetLength(FSave.y[index.y].x, Xmax*2+1);
       for mX:=-(Xmax) to (Xmax) do
       begin
         X:=-mX;
@@ -258,7 +264,7 @@ begin
         fullPosition.X:=Level.PlayerPosition.coords.X+round(sin(dir)*Y+cos(dir)*X);
         fullPosition.Y:=Level.PlayerPosition.coords.Y-round(cos(dir)*Y-sin(dir)*X);
         fullPosition.direction:=Level.PlayerPosition.direction+0;
-        FSave.y[index.y].x[index.x].fullPosition:=fullPosition;
+        SaveRec.fullPosition:=fullPosition;
         {$IfDef DBG}if dbg then
           {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clGreen;{$EndIf}
         dpiX:=round(cXmax+cXmax*X/Xmax);
@@ -267,7 +273,7 @@ begin
         if Level.isWall[fullPosition] then
         begin*)
           { TODO -cBug : Compatibility for $EDGES }
-          SetLength(FSave.y[index.y].x[index.x].main.i, 2*imax+1);
+          SetLength(SaveRec.main.i, 2*imax+1);
           {$IfDef DBG}
           if dbg then
             {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clRed;
@@ -275,7 +281,7 @@ begin
           for i:=-(imax) to (imax) do
           begin
             index.i:=i+imax;
-            SetLength(FSave.y[index.y].x[index.x].main.i[index.i].j, 2*jmax+1);
+            SetLength(SaveRec.main.i[index.i].j, 2*jmax+1);
             {$IfDef COLORS}
               dpiG:=round(255*abs(imax+i)/max(1, abs(imax+imax)));
               dpiCl:=RGBToColor(dpiR, dpiG, dpiB);
@@ -283,15 +289,15 @@ begin
             for j:=-(jmax) to (jmax) do
             begin
               index.j:=j+jmax;
-              drawPixelI(FSave.y[index.y].x[index.x].main.i[index.i].j[index.j].dump, i, j, dpiCl);
+              drawPixelI(SaveRec.main.i[index.i].j[index.j].dump, i, j, dpiCl);
             end;
             (*if i=0 then
             begin*)
               {$IfDef DRAWCORNER}
               (*if (*not animate and*) DrawCorner then
               begin*)
-                drawPixelI(FSave.y[index.y].x[index.x].corner.m, (-imax), j, clBlack);
-                drawPixelI(FSave.y[index.y].x[index.x].corner.p, (+imax), j, clBlack);
+                drawPixelI(SaveRec.corner.m, (-imax), j, clBlack);
+                drawPixelI(SaveRec.corner.p, (+imax), j, clBlack);
               (*end;*)
               {$EndIf}
             end;
@@ -316,15 +322,15 @@ begin
         end;
         *)
         {$IfDef FLOORDEC}
-          drawPixelI(FSave.y[index.y].x[index.x].FloorDec.p, +imax, j, Level.Floor[fullPosition]);
-          drawPixelI(FSave.y[index.y].x[index.x].FloorDec.m, -imax, j, Level.Sky[fullPosition]);
-          SetLength(FSave.y[index.y].x[index.x].FloorDec.j, jmax*2+1);
+          drawPixelI(SaveRec.FloorDec.p, +imax, j, Level.Floor[fullPosition]);
+          drawPixelI(SaveRec.FloorDec.m, -imax, j, Level.Sky[fullPosition]);
+          SetLength(SaveRec.FloorDec.j, jmax*2+1);
           for j:=(-jmax) to (+jmax) do
           begin
             index.j:=j+jmax;
             (*if Level.FloorDec[fullPosition] then
             begin*)
-              drawPixelI(FSave.y[index.y].x[index.x].FloorDec.j[index.j].dump, imax, j, $00FF00);
+              drawPixelI(SaveRec.FloorDec.j[index.j].dump, imax, j, $00FF00);
               //{$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, $00FF00);{$EndIf}
             (*end;*)
           end;

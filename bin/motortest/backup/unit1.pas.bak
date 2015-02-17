@@ -196,7 +196,6 @@ begin
     begin
       raise Exception.Create('Nincs ennyi szint! (max: '+IntToStr(Length(levels))+')');
     end;
-    i:=StrToInt(paly);
     if levels[i].hasMinimap then
     begin
       Form2.Show;
