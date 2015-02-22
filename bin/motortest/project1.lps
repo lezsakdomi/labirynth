@@ -46,15 +46,16 @@
         <Filename Value="..\lgraphics.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LGraphics"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="437"/>
-        <CursorPos X="70" Y="443"/>
+        <TopLine Value="101"/>
+        <CursorPos X="3" Y="115"/>
         <UsageCount Value="81"/>
         <Bookmarks Count="3">
           <Item0 X="1" Y="101" ID="0"/>
-          <Item1 X="1" Y="176" ID="1"/>
-          <Item2 X="3" Y="341" ID="2"/>
+          <Item1 X="1" Y="177" ID="1"/>
+          <Item2 X="3" Y="348" ID="2"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit3>
@@ -64,7 +65,7 @@
         <UnitName Value="LIniFiles"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="82"/>
+        <TopLine Value="80"/>
         <CursorPos X="24" Y="23"/>
         <UsageCount Value="81"/>
         <Loaded Value="True"/>
@@ -73,7 +74,6 @@
         <Filename Value="..\llevel.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LLevel"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="167"/>

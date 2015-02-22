@@ -112,6 +112,7 @@ procedure TVisualisator.draw;
 {$Define MINIMAPANIMATE}
 {$Define MINIMAP}
 {$Define FLOORDEC}
+{ $Define TRIGNOMETRY}
 
 {$IfNDef MINIMAP}
   {$UnDef MINIMAPANIMATE}
@@ -135,7 +136,7 @@ var cw, ch: Integer; //canvas
     wasWall: Boolean;
     wallCnt: Word;
     X, Xmax, Y, Ymax, imax, jmax:Integer;
-    dir: Extended;
+    {$IfDef TRIGNOMETRY}dir: Extended;{$EndIf}
     fullPosition: TLPlayerPosition;
     mX, mY, i, j: Integer;
 
@@ -225,11 +226,17 @@ begin
           if animate then Sleep(1);
         {$EndIf}
         {$IfDef ANIMATE}if dbg or Animate then Application.ProcessMessages;{$EndIf}
-        dir:=Level.PlayerPosition.direction;
-        fullPosition:=TLPlayerPosition.Create;
-        fullPosition.X:=Level.PlayerPosition.coords.X+round(sin(dir)*Y+cos(dir)*X);
-        fullPosition.Y:=Level.PlayerPosition.coords.Y-round(cos(dir)*Y-sin(dir)*X);
-        fullPosition.direction:=Level.PlayerPosition.direction+0;
+        {$IfDef TRIGNOMETRY}
+          dir:=Level.PlayerPosition.direction;
+          fullPosition:=TLPlayerPosition.Create;
+          fullPosition.X:=Level.PlayerPosition.coords.X+round(sin(dir)*Y+cos(dir)*X);
+          fullPosition.Y:=Level.PlayerPosition.coords.Y-round(cos(dir)*Y-sin(dir)*X);
+          fullPosition.direction:=Level.PlayerPosition.direction+0;
+        {$Else}
+          fullPosition:=TLPlayerPosition.Create;
+          fullPosition.X:=Level.PlayerPosition.X+X;
+          fullPosition.Y:=Level.PlayerPosition.Y+Y;
+        {$EndIf}
         {$IfDef MINIMAP}
         if (Minimap<>Nil) and (x<>0) and (y<>0) then
         begin
