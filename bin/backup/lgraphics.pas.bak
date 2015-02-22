@@ -9,6 +9,7 @@ uses
   LTypes, LLevel, LIniFiles, LSize, LPosition;
 
 type
+  EInvalidLevel=Exception;
 
   TVisualisator=class(TImage)
   private
@@ -62,7 +63,7 @@ begin
   FScreen.Height:=FMap.data.Height;
   }
   Parent:=AOwner;
-  Stretch:=ini.ReadBool(iniSection, 'sctreech', True);
+  Stretch:=ini.ReadBool(iniSection, 'sctretch', True);
   Picture.Bitmap:=ini.ReadBitmap(iniSection, 'splash', Picture.Bitmap);
   //Picture.Bitmap.LoadFromFile('C:\Users\lezsakd12a\Desktop\Labirynth\source\motortest\splash.bmp');
   dbg:=ini.ReadBool(iniSection, 'dbg', false);
@@ -100,16 +101,15 @@ end;
 procedure TVisualisator.draw;
 {$Define BITMAP}
 {$Define DRAWCORNER}
-{ $Define RANDOM}
-{ $Define LINES}
-{ $Define EDGES}
-{ $Define ANIMATE}//Does'nt matter
+{$Define RANDOM}
+{$Define LINES}
+{$Define EDGES}
 { $Define COLORS}
 {$Define FOG}
-{ $Define ANIMATE}
-{ $Define DBG}
-{$Define WALLMOD}
-{ $Define MINIMAPANIMATE}
+{$Define ANIMATE}
+{$Define DBG}
+{ $Define WALLMOD}
+{$Define MINIMAPANIMATE}
 {$Define MINIMAP}
 {$Define FLOORDEC}
 
@@ -144,7 +144,7 @@ var cw, ch: Integer; //canvas
     cl: TColor
   );
   begin
-    if cl<>clWhite then
+    if True or (cl<>clWhite) then
     begin;
       {$IfDef LINES}
       if ((imax+i)<>0) and (((imax+i) mod round(max(1, ((imax+imax)/5))))=0) then
@@ -208,34 +208,16 @@ begin
     {$IfDef ANIMATE}if not (dbg or animate) then Visible:=False;{$EndIf}
     {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Clear;
     {$IfDef BITMAP}Picture.Bitmap.BeginUpdate(True);{$EndIf}
+    Xmax:=round(Level.ViewSize.X/2);
     Ymax:=Level.ViewSize.y;
-    for mY:=-(Ymax) to 0 do
+    for mX:=-(Xmax) to (Xmax) do
     begin
-      Y:=-mY;
-      {$IfDef COLORS}
-      dpiR:=round(255*(Y*Y)/(Level.ViewSize.y*Level.ViewSize.y));
-      dpiB:=round(255*Y/Level.ViewSize.y/2);
-      {$EndIf}
-      {$IfDef FOG}
-         dpiCl:=RGBToColor(
-           round(255*(Y/Ymax)),
-           round(255*(Y/Ymax)),
-           round(255*(Y/Ymax))
-         );
-      {$EndIf}
-      //mmj:=abs(round(mmch/Ymax/2));
-      if y<>0 then mmy:=mmch-2*round(mmch/(Ymax/Y));
-      imax:=round((*Ymax-*)(ch/2)*(Y/Ymax));
-      //imax:=abs(imax);
-      imax:=round(ch/2-imax);
-      imax:=Max(imax, 1);
-      Xmax:=round(Level.ViewSize.x/2);
-      Xmax:=round(Xmax*(Y)/Ymax);
+      X:=-mX;
 
       //wasWall:=False;
-      for mX:=-(Xmax) to (Xmax) do
+      for mY:=0 to Ymax do
       begin
-        X:=-mX;
+        Y:=mY;
         {$IfDef WINDOWS}
           if xmax=0 then xmax:=1;
         {$EndIf}
@@ -266,20 +248,37 @@ begin
         jmax:=round(cw/Xmax/2);
         if Level.isWall[fullPosition] then
         begin
+          {$IfDef COLORS}
+          dpiR:=round(255*(Y*Y)/(Level.ViewSize.y*Level.ViewSize.y));
+          dpiB:=round(255*Y/Level.ViewSize.y/2);
+          {$EndIf}
+          {$IfDef FOG}
+             dpiCl:=RGBToColor(
+               round(255*(Y/Ymax)),
+               round(255*(Y/Ymax)),
+               round(255*(Y/Ymax))
+             );
+          {$EndIf}
+          //mmj:=abs(round(mmch/Ymax/2));
+          if y<>0 then mmy:=mmch-2*round(mmch/(Ymax/Y));
+          imax:=round((*Ymax-*)(ch/2)*(Y/Ymax));
+          //imax:=abs(imax);
+          imax:=round(ch/2-imax);
+          imax:=Max(imax, 1);
           {$IfDef EDGES}
           //wasWall:=not wasWall;
           wallCnt:=0;
-          if Level.isWall[fullPosition.X+1, fullPosition.Y] then Inc(wallCnt);
-          if Level.isWall[fullPosition.X+1, fullPosition.Y+1] then Inc(wallCnt);
-          if Level.isWall[fullPosition.X+1, fullPosition.Y-1] then Inc(wallCnt);
+          if Level.isWall[TLPlayerPosition.Create(fullPosition.X+1, fullPosition.Y, fullPosition.direction)] then Inc(wallCnt);
+          if Level.isWall[TLPlayerPosition.Create(fullPosition.X+1, fullPosition.Y+1, fullPosition.direction)] then Inc(wallCnt);
+          if Level.isWall[TLPlayerPosition.Create(fullPosition.X+1, fullPosition.Y-1, fullPosition.direction)] then Inc(wallCnt);
 
-          if Level.isWall[fullPosition.X, fullPosition.Y+1] then Inc(wallCnt);
+          if Level.isWall[TLPlayerPosition.Create(fullPosition.X, fullPosition.Y+1, fullPosition.direction)] then Inc(wallCnt);
          //if Level.isWall[fullPosition.X, fullPosition.Y] then Inc(wallCnt);
-          if Level.isWall[fullPosition.X, fullPosition.Y-1] then Inc(wallCnt);
+          if Level.isWall[TLPlayerPosition.Create(fullPosition.X, fullPosition.Y-1, fullPosition.direction)] then Inc(wallCnt);
 
-          if Level.isWall[fullPosition.X-1, fullPosition.Y+1] then Inc(wallCnt);
-          if Level.isWall[fullPosition.X-1, fullPosition.Y] then Inc(wallCnt);
-          if Level.isWall[fullPosition.X-1, fullPosition.Y-1] then Inc(wallCnt);
+          if Level.isWall[TLPlayerPosition.Create(fullPosition.X-1, fullPosition.Y+1, fullPosition.direction)] then Inc(wallCnt);
+          if Level.isWall[TLPlayerPosition.Create(fullPosition.X-1, fullPosition.Y, fullPosition.direction)] then Inc(wallCnt);
+          if Level.isWall[TLPlayerPosition.Create(fullPosition.X-1, fullPosition.Y-1, fullPosition.direction)] then Inc(wallCnt);
           {$EndIf}
           {$IfDef DBG}if dbg then
             {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clRed;{$EndIf}
@@ -319,6 +318,7 @@ begin
             end;
           end;
           *)
+          Break;
         end else if not Level.isPlayerPosition(fullPosition) then
         begin
           {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, clWhite);{$EndIf}
@@ -440,6 +440,7 @@ end;
 procedure TVisualisator.setLevel(Value: TLLevel);
 var x, y: Integer;
 begin
+  if Value=nil then raise ;
   FLevel:=Value;
   if Minimap<>Nil then
   begin
@@ -460,11 +461,6 @@ begin
   draw;
   Animate:=False;
   {$EndIf}
-  if Minimap<>Nil then
-  begin
-    Minimap.Canvas.Clear;
-    draw;
-  end;
 end;
 
 end.

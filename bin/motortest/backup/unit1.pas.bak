@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize
+  LIniFiles, LGraphics, LLevel, LTypes, fphttpclient, LSize, LPosition
   {$IfDef WINDOWS}, windows, mmsystem{$EndIf}, process, Unit2, LCLIntf;
 
 type
@@ -45,6 +45,7 @@ var
   levels: TLLevelArray;
   Visualisator: TVisualisator;
   net: TFPHTTPClient;
+  paly: String;
 
 implementation
 
@@ -60,7 +61,8 @@ begin
   //;
   //cini:=TLIniFile.Create(stream);
   ini:=TLIniFile.Create('../../main.ini');
-  Size:=ini.ReadL2DSize('Form', 'size');
+  Size:=ini.ReadL2DSize('Form', 'size', Size);
+  Pos:=ini.ReadL2DPosition('Form', 'pos', Pos);
   Form2:=TForm2.Create(Form1);
   Visualisator:=TVisualisator.Create(Form1, ini.ReadIni('Visualisator', 'ini'));
   levelsini:=ini.ReadIni('Form', 'levelsini');
@@ -76,6 +78,7 @@ begin
   Timer3.Interval:=ini.ReadInteger('Form', 'keydetect', Timer3.Interval);
   Timer3.Enabled:=True;
   sndPlaySound(PChar(ini.ReadFn('Form', 'music', '')), SND_ASYNC or SND_LOOP);
+  paly:='';
 end;
 
 procedure TForm1.FormDeactivate(Sender: TObject);
@@ -184,18 +187,31 @@ if (Visualisator<>Nil) and (Visualisator.Level<>Nil) then
 end;
 
 procedure TForm1.setLevel(i: Integer);
+var level: TLLevel;
 begin
-  if levels[i-1].hasMinimap then
+  paly:=paly+IntToStr(i);
+  if Length(paly)=2 then
   begin
-    Form2.Show;
-    Visualisator.Minimap:=Form2;
-  end else
-  begin
-    Form2.Hide;
-    Visualisator.Minimap:=Nil;
+    try
+      level:=levels[IntToStr(paly)];
+      if level=Nil then raise EInvalidLevel.Create('Ilyen pálya nem is létezik!');
+      //ShowMessage(paly);
+      if level.hasMinimap then
+      begin
+        Form2.Show;
+        Visualisator.Minimap:=Form2;
+      end else
+      begin
+        Form2.Hide;
+        Visualisator.Minimap:=Nil;
+      end;
+      Visualisator.Level:=level;
+      paly:='';
+    except
+      on E: EInvalidLevel do
+        ShowMessage(E.Message);
+    end;
   end;
-  Visualisator.Level:=levels[i-1];
-  Show;
 end;
 
 function TForm1.getPos:TL2DPosition;
@@ -221,4 +237,3 @@ begin
 end;
 
 end.
-

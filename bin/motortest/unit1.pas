@@ -187,23 +187,31 @@ if (Visualisator<>Nil) and (Visualisator.Level<>Nil) then
 end;
 
 procedure TForm1.setLevel(i: Integer);
+var level: TLLevel;
 begin
-paly:=paly+IntToStr(i);
-if Length(paly)=2 then
-begin
-  ShowMessage(paly);
-  if levels[StrToInt(paly)].hasMinimap then
+  paly:=paly+IntToStr(i);
+  if Length(paly)=2 then
   begin
-    Form2.Show;
-    Visualisator.Minimap:=Form2;
-  end else
-  begin
-    Form2.Hide;
-    Visualisator.Minimap:=Nil;
+    try
+      level:=levels[StrToInt(paly)];
+      if level=Nil then raise EInvalidLevel.Create('Ilyen pálya nem is létezik!');
+      //ShowMessage(paly);
+      if level.hasMinimap then
+      begin
+        Form2.Show;
+        Visualisator.Minimap:=Form2;
+      end else
+      begin
+        Form2.Hide;
+        Visualisator.Minimap:=Nil;
+      end;
+      Visualisator.Level:=level;
+      paly:='';
+    except
+      on E: EInvalidLevel do
+        ShowMessage(E.Message);
+    end;
   end;
-  Visualisator.Level:=levels[StrToInt(paly)];
-  Show;
-end;
 end;
 
 function TForm1.getPos:TL2DPosition;
