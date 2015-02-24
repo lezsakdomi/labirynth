@@ -100,18 +100,18 @@ end;
 
 procedure TVisualisator.draw;
 {$Define BITMAP}
-{$Define DRAWCORNER}
+{ $Define DRAWCORNER}
 {$Define RANDOM}
 {$Define LINES}
-{$Define EDGES}
-{ $Define COLORS}
-{$Define FOG}
-{$Define ANIMATE}
+{ $Define EDGES}
+{$Define COLORS}
+{ $Define FOG}
+{ $Define ANIMATE}
 {$Define DBG}
 { $Define WALLMOD}
-{$Define MINIMAPANIMATE}
-{$Define MINIMAP}
-{$Define FLOORDEC}
+{ $Define MINIMAPANIMATE}
+{ $Define MINIMAP}
+{ $Define FLOORDEC}
 { $Define TRIGNOMETRY}
 
 {$IfNDef MINIMAP}
@@ -251,10 +251,10 @@ begin
         {$IfDef DBG}if dbg then
           {$IfDef BITMAP}Picture.Bitmap.{$EndIf}Canvas.Pixels[fullPosition.coords.X, fullPosition.coords.Y]:=clGreen;{$EndIf}
         {$IfDef MINIMAP}drawPixelMinimap(mmx, mmy, mmi, mmj, {clGreen}Level.data[fullPosition]);{$EndIf}
-        dpiX:=round(cXmax+cXmax*X/Xmax);
-        jmax:=round(cw/Xmax/2);
         if Level.isWall[fullPosition] then
         begin
+          dpiX:=round(cXmax+cXmax*X/Xmax);
+          jmax:=round(cw/Xmax/2);
           {$IfDef COLORS}
           dpiR:=round(255*(Y*Y)/(Level.ViewSize.y*Level.ViewSize.y));
           dpiB:=round(255*Y/Level.ViewSize.y/2);

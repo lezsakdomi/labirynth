@@ -193,7 +193,7 @@ begin
   if Length(paly)=2 then
   begin
     try
-      level:=levels[IntToStr(paly)];
+      level:=levels[StrToInt(paly)];
       if level=Nil then raise EInvalidLevel.Create('Ilyen pálya nem is létezik!');
       //ShowMessage(paly);
       if level.hasMinimap then

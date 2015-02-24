@@ -125,6 +125,7 @@ begin
             end;
             FormCreate(Nil);
           end;
+    'k': Visualisator.Repaint;
     else
       begin
         Color:=clYellow;
